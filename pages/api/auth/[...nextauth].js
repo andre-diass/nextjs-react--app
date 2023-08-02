@@ -1,4 +1,6 @@
 import NextAuth from "next-auth";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
+import clientPromise from "../../../lib/mongodb";
 
 import GoogleProvider from "next-auth/providers/google";
 
@@ -10,5 +12,5 @@ export default NextAuth({
     }),
   ],
   secret: "c236d8c4ac7bee3d2786de1e0afd8b66",
+  adapter: MongoDBAdapter(clientPromise),
 });
-//add key
