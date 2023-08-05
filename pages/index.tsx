@@ -1,6 +1,7 @@
 import Home from "@/components/templates/Home";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import { useSession } from "next-auth/react";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Index() {
   const { data: session } = useSession();
@@ -9,8 +10,9 @@ export default function Index() {
 }
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
 
   if (session) return { redirect: { destination: "/app/" } };
+
   return { props: {} };
 }
