@@ -1,30 +1,16 @@
-import { useSession, signIn, signOut } from "next-auth/react";
+import Home from "@/components/templates/Home";
+import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-export default function Home() {
+export default function Index() {
   const { data: session } = useSession();
-  if (!session) {
-    return (
-      <>
-        <div className="bg-blue-900 h-screen w-screen flex items-center">
-          <div className="text-center w-full">
-            <button
-              onClick={() => signIn("google")}
-              className="bg-white dark:text-slate-950 rounded-lg p-2 px-4"
-            >
-              {" "}
-              Google log in{" "}
-            </button>
-          </div>
-        </div>
-      </>
-    );
-  }
-  return (
-    <>
-      <button onClick={() => signOut()}>Sign out</button>
-      <div>Logged in</div>
-      <br />
-      <span>Signed in as {session.user?.name || session.user?.email}</span>
-    </>
-  );
+
+  return <Home />;
+}
+
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context);
+
+  if (session) return { redirect: { destination: "/app/" } };
+  return { props: {} };
 }

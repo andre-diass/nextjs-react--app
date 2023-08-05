@@ -1,14 +1,15 @@
-import { getSession, useSession } from "next-auth/react";
+import { signOut, useSession, getSession } from "next-auth/react";
 
-const SecuredPage = ({ user }: any) => {
+export default function App() {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <>
-      <p>you should not see this page</p>
-      <p>{user.name}</p>
+      <button onClick={() => signOut()}>Sign out</button>
+      <p> this is the app protected page</p>
     </>
   );
-};
-
+}
 export async function getServerSideProps(context: any) {
   const session = await getSession(context);
 
@@ -23,9 +24,7 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      user: session.user,
+      data: session.user,
     },
   };
 }
-
-export default SecuredPage;
