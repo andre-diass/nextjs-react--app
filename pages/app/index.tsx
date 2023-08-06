@@ -1,14 +1,18 @@
 import { signOut, useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
+import Navbar from "@/components/organisms/Navbar";
 
 export default function App() {
-  const { data: session } = useSession();
-  console.log(session);
+  const session = useSession();
   return (
     <>
-      <button onClick={() => signOut()}>Sign out</button>
-      <p> this is the app protected page</p>
+      <div className="bg-blue-900 min-h-screen flex">
+        <Navbar />
+        <div className="bg-slate-900 flex-grow my-2 mr-2 rounded-lg p-4">
+          logged in as {}
+        </div>
+      </div>
     </>
   );
 }
