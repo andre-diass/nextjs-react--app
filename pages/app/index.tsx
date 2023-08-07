@@ -5,20 +5,7 @@ import { protectedRouteMiddleware } from "../../middlewares/protectedRouteMiddle
 export default function App() {
   return (
     <>
-      <div className="bg-blue-900 min-h-screen flex">
-        <Navbar />
-        <div className="bg-slate-900 flex-grow my-2 mr-2 rounded-lg p-4">
-          logged in as {}
-        </div>
-        <button
-          onClick={async () => {
-            await signOut({ redirect: true, callbackUrl: "/" });
-          }}
-          className="bg-white dark:text-slate-950"
-        >
-          Sign out
-        </button>
-      </div>
+      <p> teste . isso dever ir dentro do componente main </p>
     </>
   );
 }

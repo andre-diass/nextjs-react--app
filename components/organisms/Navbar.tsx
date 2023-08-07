@@ -6,6 +6,7 @@ import orders from "../../public/orders.svg";
 import settings from "../../public/settings.svg";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 interface NavOptionsProps {
   options: { to: string; logoSrc: StaticImageData; title: string }[];
@@ -47,6 +48,14 @@ export default function Navbar() {
           ]}
         />
       </nav>
+      <button
+        onClick={async () => {
+          await signOut({ redirect: true, callbackUrl: "/" });
+        }}
+        className=" flex bg-white rounded-lg p-2 dark:text-slate-950"
+      >
+        Sign out
+      </button>
     </aside>
   );
 }

@@ -9,7 +9,6 @@ export type NextAuthProps = {
 export type ComponentCustomProperties = {
   protected?: boolean;
   customLayout?: boolean;
-  hideSubmenu?: boolean;
 };
 
 export type CustomAppProps = AppProps<NextAuthProps> & {

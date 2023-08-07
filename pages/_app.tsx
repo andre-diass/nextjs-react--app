@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { CustomAppProps } from "../types/nextApp";
+import ProtectedLayout from "@/components/layouts/ProtectedLayout";
 
 export default function App({
   Component,
@@ -10,7 +11,11 @@ export default function App({
   return (
     <SessionProvider session={session}>
       {(function () {
-        return <Component {...pageProps} />;
+        return (
+          <ProtectedLayout>
+            <Component {...pageProps} />
+          </ProtectedLayout>
+        );
       })()}
     </SessionProvider>
   );
