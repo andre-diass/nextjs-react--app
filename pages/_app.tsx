@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import { CustomAppProps } from "../types/nextApp";
 import ProtectedLayout from "@/components/layouts/ProtectedLayout";
+import PublicLayout from "@/components/layouts/PublicLayout";
 
 export default function App({
   Component,
@@ -11,11 +12,21 @@ export default function App({
   return (
     <SessionProvider session={session}>
       {(function () {
-        return (
-          <ProtectedLayout>
-            <Component {...pageProps} />
-          </ProtectedLayout>
-        );
+        const isLogged = session;
+
+        if (isLogged) {
+          return (
+            <ProtectedLayout>
+              <Component {...pageProps} />
+            </ProtectedLayout>
+          );
+        } else if (!isLogged) {
+          return (
+            <PublicLayout>
+              <Component {...pageProps} />
+            </PublicLayout>
+          );
+        }
       })()}
     </SessionProvider>
   );
