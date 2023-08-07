@@ -4,8 +4,6 @@ import { useSession } from "next-auth/react";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Index() {
-  const { data: session } = useSession();
-
   return <Home />;
 }
 
