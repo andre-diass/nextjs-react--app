@@ -1,5 +1,3 @@
-import { signOut } from "next-auth/react";
-import Navbar from "@/components/organisms/Navbar";
 import { protectedRouteMiddleware } from "../../middlewares/protectedRouteMiddleware";
 
 export default function App() {
