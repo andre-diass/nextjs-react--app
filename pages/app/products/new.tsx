@@ -17,10 +17,7 @@ export default function NewProduct() {
 
   async function makePostRequest(body: any) {
     try {
-      const response = await axios.post(
-        "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/create",
-        body
-      );
+      const response = await axios.post("teste", body);
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error:", error);
