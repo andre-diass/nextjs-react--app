@@ -4,8 +4,14 @@ import { protectedRouteMiddleware } from "../../../middlewares/protectedRouteMid
 export default function Products() {
   return (
     <>
-      <Link href={"/app/products/new"}> New product </Link>
-      <p>this is the app products page</p>
+      <Link
+        className="bg-slate-100 rounded-lg p-2 text-zinc-900"
+        href={"/app/products/new"}
+      >
+        {" "}
+        New product{" "}
+      </Link>
+      <p className="mt-4">this is the app products page</p>
     </>
   );
 }

@@ -52,7 +52,7 @@ export default function Navbar() {
         onClick={async () => {
           await signOut({ redirect: true, callbackUrl: "/" });
         }}
-        className=" flex bg-white rounded-lg p-2 dark:text-slate-950"
+        className=" flex bg-white text-slate-800 rounded-lg p-2 dark:text-slate-950"
       >
         Sign out
       </button>
