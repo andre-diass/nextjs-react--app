@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import store from "../../public/store.svg";
 import dashboard from "../../public/dashboard.svg";
@@ -5,7 +6,6 @@ import products from "../../public/products.svg";
 import orders from "../../public/orders.svg";
 import settings from "../../public/settings.svg";
 import { StaticImageData } from "next/image";
-import Image from "next/image";
 import { signOut } from "next-auth/react";
 
 interface NavOptionsProps {
@@ -21,7 +21,7 @@ function NavOptions({ options }: NavOptionsProps) {
           key={"key" + option.to}
           className="flex items-center gap-2 my-2"
         >
-          <Image
+          <img
             src={option.logoSrc.src}
             alt={option.title}
             width={22}

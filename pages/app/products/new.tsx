@@ -16,12 +16,7 @@ export default function NewProduct() {
   const { errors } = formState;
 
   async function makePostRequest(body: any) {
-    try {
-      const response = await axios.post("teste", body);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    axios.post("/api/products", body).catch((x) => console.error(x));
   }
 
   const onSubmit = (data: any) => {
