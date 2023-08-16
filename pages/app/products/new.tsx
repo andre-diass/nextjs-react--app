@@ -5,8 +5,8 @@ import axios from "axios";
 
 interface FormData {
   name: string;
-  email: string;
-  password: string;
+  description: string;
+  price: number;
 }
 
 export default function NewProduct() {
@@ -31,55 +31,54 @@ export default function NewProduct() {
         noValidate
         className="flex m-10 mx-20 flex-col gap-4  "
       >
-        <h1 className="text-xl font-medium dark:text-white">Teste</h1>
+        <h1 className="text-xl font-medium dark:text-white">Novo Produto</h1>
         <div>
           <Label
             className="text-slate-200"
-            htmlFor="nome completo"
-            value="Nome completo"
+            htmlFor="productName"
+            value="Nome do produto"
           />
           <TextInput
-            id="fullName"
-            type="name"
+            id="productName"
+            type="string"
             className="mt-2"
             {...register("name", {
               required: {
                 value: true,
-                message: "Nome é obrigtório",
+                message: "Nome do produto é obrigtório",
               },
             })}
           />
           <p className="text-red-500 text-sm">{errors.name?.message}</p>
         </div>
         <div>
-          <Label className="text-slate-200" htmlFor="email" value="email" />
+          <Label className="text-slate-200" htmlFor="email" value="Descrição" />
           <TextInput
-            id="email"
-            type="email"
-            className="mt-2"
-            {...register("email", {
-              required: {
-                value: true,
-                message: "email é obrigtório",
-              },
-            })}
-          />
-          <p className="text-red-500 text-sm">{errors.email?.message}</p>
-        </div>
-        <div>
-          <Label className="text-slate-200" htmlFor="senha" value="senha" />
-          <TextInput
-            id="password"
+            id="productDescription"
             type="string"
             className="mt-2"
-            {...register("password", {
+            style={{ height: "80px" }}
+            {...register("description")}
+          />
+        </div>
+        <div>
+          <Label
+            className="text-slate-200"
+            htmlFor="productPrice"
+            value="Preço"
+          />
+          <TextInput
+            id="productPrice"
+            type="number"
+            className="mt-2"
+            {...register("price", {
               required: {
                 value: true,
-                message: "senha é obrigtório",
+                message: "Preço é obrigtório",
               },
             })}
           />
-          <p className="text-red-500 text-sm">{errors.password?.message}</p>
+          <p className="text-red-500 text-sm">{errors.price?.message}</p>
         </div>
         <button type="submit"> Submit </button>
       </form>

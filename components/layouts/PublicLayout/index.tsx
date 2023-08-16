@@ -1,5 +1,9 @@
 import { PropsWithChildren } from "react";
 
 export default function PublicLayout({ children }: PropsWithChildren) {
-  return <main>{children}</main>;
+  return (
+    <div className="bg-blue-900 h-screen w-screen flex items-center justify-center">
+      <main>{children}</main>
+    </div>
+  );
 }
