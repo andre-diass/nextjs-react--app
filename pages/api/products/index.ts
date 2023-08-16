@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   try {
     const response = await axios.post(
-      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/create",
+      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/createProduct",
       req.body
     );
     console.log("Response:", response.data);
