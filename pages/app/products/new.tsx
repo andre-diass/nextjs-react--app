@@ -19,9 +19,25 @@ export default function NewProduct() {
     axios.post("/api/products", body).catch((x) => console.error(x));
   }
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    makePostRequest(data);
+  async function getUserId() {
+    return axios
+      .get("/api/accountID")
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  const onSubmit = async (data: any) => {
+    try {
+      const userID = await getUserId();
+      const bodyWithAccountID = { ...data, userId: userID };
+      console.log(bodyWithAccountID);
+
+      makePostRequest(bodyWithAccountID);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
