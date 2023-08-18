@@ -5,7 +5,8 @@ import axios from "axios";
 export default function Products() {
   async function makeGetRequest() {
     const response = await axios.get(
-      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/getProduct"
+      "http://127.0.0.1:3000/dev/serverlessSetup/getProduct",
+      { params: { productName: "lambda" } }
     );
     console.log(response.data);
   }
