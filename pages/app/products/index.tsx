@@ -1,22 +1,33 @@
 import Link from "next/link";
-import { protectedRouteMiddleware } from "../../../middlewares/protectedRouteMiddleware";
+import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
+import { useEffect, useState } from "react";
+
+interface Product {
+  description: string;
+  name: string;
+  price: string;
+  userId: string;
+  __v: number;
+  _id: string;
+}
 
 export default function Products() {
+  const [products, setProducts] = useState<Product[]>([]);
+
   async function makeGetRequest() {
     const userID = await axios.get("/api/accountID");
 
-    const newResponse = await axios.get("/api/products", {
+    const response = await axios.get("/api/products", {
       params: { userId: userID.data },
     });
-    /*
-    const response = await axios.get(
-      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/getProduct",
-      { params: { userId: userID.data } }
-    );
-    */
-    console.log(newResponse.data);
+    console.log(response.data);
+
+    setProducts(response.data);
   }
+  useEffect(() => {
+    makeGetRequest();
+  }, []);
 
   return (
     <>
@@ -26,13 +37,25 @@ export default function Products() {
       >
         New product
       </Link>
-      <p className="mt-4">this is the app products page</p>
-      <button
-        onClick={makeGetRequest}
-        className="bg-white text-black p-2 rounded-lg mt-5"
-      >
-        Make get request
-      </button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product._id}>
+              <td>{product.description}</td>
+              <td>{product.name}</td>
+              <td>{product.price}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }

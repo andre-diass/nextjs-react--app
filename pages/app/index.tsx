@@ -1,4 +1,4 @@
-import { protectedRouteMiddleware } from "../../middlewares/protectedRouteMiddleware";
+import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 
 export default function App() {
   return (
