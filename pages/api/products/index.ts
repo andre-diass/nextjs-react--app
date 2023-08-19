@@ -5,11 +5,27 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  try {
-    const response = await api.post("/createProduct", req.body);
-    console.log("Response:", response.data);
-    return res.json(response.data);
-  } catch (error) {
-    console.error("Error in API handler:", error);
+  const { method } = req;
+
+  if (method === "POST") {
+    try {
+      const response = await api.post("/createProduct", req.body);
+      console.log("Response:", response.data);
+      return res.json(response.data);
+    } catch (error) {
+      console.error("Error in API handler:", error);
+    }
+  }
+
+  if (method === "GET") {
+    const userID = req.query.userId;
+    try {
+      const response = await api.get("/getProduct", {
+        params: { userId: userID },
+      });
+      return res.json(response.data);
+    } catch (error) {
+      console.error("Error in API handler:", error);
+    }
   }
 }
