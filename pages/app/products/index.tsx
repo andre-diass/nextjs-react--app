@@ -4,10 +4,14 @@ import axios from "axios";
 
 export default function Products() {
   async function makeGetRequest() {
+    const userID = await axios.get("/api/accountID");
+
     const response = await axios.get(
-      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/getProduct",
-      { params: { productName: "lambda" } }
+      "http://localhost:3000/dev/serverlessSetup/getProduct",
+      { params: { userId: userID.data } }
     );
+    console.log(userID.data);
+
     console.log(response.data);
   }
 
