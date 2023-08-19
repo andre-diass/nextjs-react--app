@@ -7,7 +7,7 @@ export default function Products() {
     const userID = await axios.get("/api/accountID");
 
     const response = await axios.get(
-      "http://localhost:3000/dev/serverlessSetup/getProduct",
+      "https://ske84d6xyj.execute-api.us-west-1.amazonaws.com/dev/serverlessSetup/getProduct",
       { params: { userId: userID.data } }
     );
     console.log(userID.data);
