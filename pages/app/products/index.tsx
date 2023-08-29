@@ -38,20 +38,19 @@ export default function Products() {
         New product
       </Link>
 
-      <table>
+      <table className="basic">
         <thead>
           <tr>
-            <th>Description</th>
-            <th>Name</th>
-            <th>Price</th>
+            <th>Nome</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <tr key={product._id}>
-              <td>{product.description}</td>
               <td>{product.name}</td>
-              <td>{product.price}</td>
+              <td>
+                <Link href={"/products/" + product._id}> Edit </Link>
+              </td>
             </tr>
           ))}
         </tbody>

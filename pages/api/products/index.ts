@@ -20,7 +20,7 @@ export default async function handler(
   if (method === "GET") {
     const userID = req.query.userId;
     try {
-      const response = await api.get("/getProduct", {
+      const response = await api.get("/getProducts", {
         params: { userId: userID },
       });
       return res.json(response.data);
