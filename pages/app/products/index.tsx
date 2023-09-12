@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import editIcon from "@/public/edit-icon.svg";
 interface Product {
   description: string;
   name: string;
@@ -21,7 +22,6 @@ export default function Products() {
     const response = await axios.get("/api/products", {
       params: { userId: userID.data },
     });
-    console.log(response.data);
 
     setProducts(response.data);
   }
@@ -49,7 +49,10 @@ export default function Products() {
             <tr key={product._id}>
               <td>{product.name}</td>
               <td>
-                <Link href={"/products/" + product._id}> Edit </Link>
+                <Link href={"/products/edit" + product._id}>
+                  <img src={editIcon.src} alt="Icon" width={22} height={16} />
+                  Edit{" "}
+                </Link>
               </td>
             </tr>
           ))}
