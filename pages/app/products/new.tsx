@@ -1,4 +1,4 @@
-import { protectedRouteMiddleware } from "../../../middlewares/protectedRouteMiddleware";
+import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import { useForm } from "react-hook-form";
 import { Label, TextInput } from "flowbite-react";
 import axios from "axios";
@@ -12,16 +12,30 @@ interface FormData {
 export default function NewProduct() {
   const form = useForm<FormData>();
   const { register, handleSubmit, formState } = form;
-
   const { errors } = formState;
 
-  async function makePostRequest(body: any) {
+  async function createProduct(body: any) {
     axios.post("/api/products", body).catch((x) => console.error(x));
   }
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    makePostRequest(data);
+  async function getUserId() {
+    return axios
+      .get("/api/accountID")
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  const onSubmit = async (data: any) => {
+    try {
+      const userID = await getUserId();
+      const bodyWithAccountID = { ...data, userId: userID };
+
+      createProduct(bodyWithAccountID);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

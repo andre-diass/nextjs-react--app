@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import store from "../../public/store.svg";
-import dashboard from "../../public/dashboard.svg";
-import products from "../../public/products.svg";
-import orders from "../../public/orders.svg";
-import settings from "../../public/settings.svg";
+import store from "@/public/store.svg";
+import dashboard from "@/public/dashboard.svg";
+import products from "@/public/products.svg";
+import orders from "@/public/orders.svg";
+import settings from "@/public/settings.svg";
 import { StaticImageData } from "next/image";
 import { signOut } from "next-auth/react";
 

@@ -1,7 +1,6 @@
 import Navbar from "@/components/organisms/Navbar";
 import { PropsWithChildren } from "react";
 import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
 
 export default function ProtectedLayout({
   children,
