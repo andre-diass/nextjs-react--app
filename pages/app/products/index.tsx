@@ -19,7 +19,7 @@ export default function Products() {
   async function makeGetRequest() {
     const userID = await axios.get("/api/accountID");
 
-    const response = await axios.get("/api/products", {
+    const response = await axios.get("/api/products/getProducts", {
       params: { userId: userID.data },
     });
 
@@ -49,7 +49,7 @@ export default function Products() {
             <tr key={product._id}>
               <td>{product.name}</td>
               <td>
-                <Link href={"/products/edit" + product._id}>
+                <Link href={"products/edit/" + product._id}>
                   <img src={editIcon.src} alt="Icon" width={22} height={16} />
                   Edit{" "}
                 </Link>

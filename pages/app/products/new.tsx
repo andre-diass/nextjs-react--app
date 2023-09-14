@@ -15,7 +15,9 @@ export default function NewProduct() {
   const { errors } = formState;
 
   async function createProduct(body: any) {
-    axios.post("/api/products", body).catch((x) => console.error(x));
+    axios
+      .post("/api/products/createProduct", body)
+      .catch((x) => console.error(x));
   }
 
   async function getUserId() {
