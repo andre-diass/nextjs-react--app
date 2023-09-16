@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const productID = req.query.productId;
   try {
-    const response = await api.get("/getProduct", {
+    const response = await api.delete("/deleteProduct", {
       params: { productId: productID },
     });
     return res.json(response.data);

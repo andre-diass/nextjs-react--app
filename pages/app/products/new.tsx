@@ -1,8 +1,10 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
+import { useRouter } from "next/router";
 
 export default function NewProduct() {
+  const router = useRouter();
   async function createProduct(body: any) {
     axios
       .post("/api/products/createProduct", body)
@@ -15,7 +17,8 @@ export default function NewProduct() {
       .then((response) => response.data)
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .finally(() => router.push("/app/products"));
   }
 
   const onSubmit = async (data: any) => {

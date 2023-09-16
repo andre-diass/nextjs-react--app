@@ -3,7 +3,8 @@ import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import editIcon from "@/public/edit-icon.svg";
+import edit from "@/public/edit.svg";
+import trash from "@/public/trash.svg";
 interface Product {
   description: string;
   name: string;
@@ -50,8 +51,12 @@ export default function Products() {
               <td>{product.name}</td>
               <td>
                 <Link href={"products/edit/" + product._id}>
-                  <img src={editIcon.src} alt="Icon" width={22} height={16} />
+                  <img src={edit.src} alt="Icon" width={22} height={16} />
                   Edit{" "}
+                </Link>
+                <Link href={"products/delete/" + product._id}>
+                  <img src={trash.src} alt="Icon" width={22} height={16} />
+                  Delete
                 </Link>
               </td>
             </tr>

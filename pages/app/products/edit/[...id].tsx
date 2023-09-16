@@ -19,8 +19,8 @@ export default function Edit() {
   const onSubmit = async (data: any) => {
     try {
       const body = { ...data };
-
       updateProduct(body);
+      router.push("/app/products");
     } catch (error) {
       console.error(error);
     }
