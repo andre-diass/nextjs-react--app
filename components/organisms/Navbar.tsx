@@ -42,7 +42,7 @@ export default function Navbar() {
           options={[
             { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
-            { to: "app/products", logoSrc: products, title: "Products" },
+            { to: "/app/products", logoSrc: products, title: "Products" },
             { to: "/orders", logoSrc: orders, title: "Orders" },
             { to: "/settings", logoSrc: settings, title: "Settings" },
           ]}
