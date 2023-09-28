@@ -16,16 +16,20 @@ export default function ProductForm(props: any) {
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
+  /*
   const uploadImages = async (event: any) => {
     const files = event.target?.files;
     if (files.length > 0) {
       const data = new FormData();
-      Array.from(files).forEach((file: any) => data.append("file", file));
+      for (const file of files) {
+        data.append("file", file);
+      }
+
       const res = await axios.post("/api/products/uploadImage", data);
       console.log(res.data);
     }
   };
-
+*/
   return (
     <>
       <form
@@ -74,7 +78,7 @@ export default function ProductForm(props: any) {
               <img src={upload.src} alt="upload" width={22} height={22} />
               Upload{" "}
               <input
-                onChange={uploadImages}
+                //onChange={uploadImages}
                 className="hidden"
                 type="file"
               ></input>
