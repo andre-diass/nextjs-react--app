@@ -24,8 +24,10 @@ export default function ProductForm(props: any) {
         data.append("file", file);
       }
 
-      const res = await axios.post("/api/products/uploadImage", data);
-      console.log(res);
+      const res = await axios.post("/api/products/uploadImage", data, {
+        params: { productId: props.productId },
+      });
+      console.log(res.data.links);
     }
   };
   return (
@@ -65,25 +67,31 @@ export default function ProductForm(props: any) {
             {...register("description")}
           />
         </div>
-        <div className="flex-col ">
-          <Label
-            className="text-slate-200"
-            htmlFor="productPrice"
-            value="Photos"
-          />
-          <div>
-            <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 mt-2 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
-              <img src={upload.src} alt="upload" width={22} height={22} />
-              Upload{" "}
-              <input
-                onChange={uploadImages}
-                multiple
-                className="hidden"
-                type="file"
-              ></input>
-            </label>
+        {props.isNewProduct ? (
+          <div></div>
+        ) : (
+          <div className="flex-col ">
+            <Label
+              className="text-slate-200"
+              htmlFor="productPrice"
+              value="Photos"
+            />
+
+            <div>
+              <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 mt-2 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
+                <img src={upload.src} alt="upload" width={22} height={22} />
+                Upload{" "}
+                <input
+                  onChange={uploadImages}
+                  multiple
+                  className="hidden"
+                  type="file"
+                ></input>
+              </label>
+            </div>
           </div>
-        </div>
+        )}
+
         <div>
           <Label
             className="text-slate-200"

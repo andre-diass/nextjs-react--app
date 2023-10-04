@@ -38,6 +38,7 @@ export default function NewProduct() {
         onSubmit={onSubmit}
         heading="Novo Produto"
         isInputRequired={true}
+        isNewProduct={true}
       ></ProductForm>
     </>
   );

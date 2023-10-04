@@ -32,6 +32,8 @@ export default function Edit() {
         onSubmit={onSubmit}
         heading="Editar Produto"
         isInputRequired={false}
+        isNewProduct={false}
+        productId={productID}
       ></ProductForm>
     </>
   );
