@@ -4,7 +4,7 @@ import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
 
-interface FormData {
+interface IForm {
   name: string;
   description: string;
   price: number;
@@ -12,11 +12,10 @@ interface FormData {
 }
 
 export default function ProductForm(props: any) {
-  const form = useForm<FormData>();
+  const form = useForm<IForm>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  /*
   const uploadImages = async (event: any) => {
     const files = event.target?.files;
     if (files.length > 0) {
@@ -26,10 +25,9 @@ export default function ProductForm(props: any) {
       }
 
       const res = await axios.post("/api/products/uploadImage", data);
-      console.log(res.data);
+      console.log(res);
     }
   };
-*/
   return (
     <>
       <form
@@ -78,7 +76,8 @@ export default function ProductForm(props: any) {
               <img src={upload.src} alt="upload" width={22} height={22} />
               Upload{" "}
               <input
-                //onChange={uploadImages}
+                onChange={uploadImages}
+                multiple
                 className="hidden"
                 type="file"
               ></input>
