@@ -7,6 +7,7 @@ import ProductForm from "@/components/molecules/ProductForm";
 export default function Edit() {
   const router = useRouter();
   const productID = router.query.id ? router.query.id[0] : null; // fix this line later
+  let imageLinks: any;
 
   async function updateProduct(body: any) {
     axios
@@ -18,12 +19,20 @@ export default function Edit() {
 
   const onSubmit = async (data: any) => {
     try {
-      const body = { ...data };
+      const body = {
+        ...data,
+        imageLinks: imageLinks,
+      };
+
       updateProduct(body);
       router.push("/app/products");
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleImageData = (data: Array<string>) => {
+    imageLinks = data;
   };
 
   return (
@@ -34,6 +43,8 @@ export default function Edit() {
         isInputRequired={false}
         isNewProduct={false}
         productId={productID}
+        existingImages={[]}
+        sentImageData={handleImageData}
       ></ProductForm>
     </>
   );

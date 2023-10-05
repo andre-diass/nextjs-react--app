@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 export default function NewProduct() {
   const router = useRouter();
+  let imageLinks: Array<string>;
   async function createProduct(body: any) {
     axios
       .post("/api/products/createProduct", body)
@@ -24,12 +25,20 @@ export default function NewProduct() {
   const onSubmit = async (data: any) => {
     try {
       const userID = await getUserId();
-      const bodyWithAccountID = { ...data, userId: userID };
+      const bodyWithAccountID = {
+        ...data,
+        userId: userID,
+        imageLinks: imageLinks,
+      };
 
       createProduct(bodyWithAccountID);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleImageData = (data: Array<string>) => {
+    imageLinks = data;
   };
 
   return (
@@ -39,6 +48,7 @@ export default function NewProduct() {
         heading="Novo Produto"
         isInputRequired={true}
         isNewProduct={true}
+        sentImageData={handleImageData}
       ></ProductForm>
     </>
   );

@@ -3,18 +3,20 @@ import { useForm } from "react-hook-form";
 import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface IForm {
   name: string;
   description: string;
   price: number;
-  images: FileList;
+  images: Array<string>;
 }
 
 export default function ProductForm(props: any) {
   const form = useForm<IForm>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
+  const [images, setImages] = useState(props.existingImages || []);
 
   const uploadImages = async (event: any) => {
     const files = event.target?.files;
@@ -24,12 +26,21 @@ export default function ProductForm(props: any) {
         data.append("file", file);
       }
 
-      const res = await axios.post("/api/products/uploadImage", data, {
-        params: { productId: props.productId },
-      });
-      console.log(res.data.links);
+      await axios
+        .post("/api/products/uploadImage", data, {
+          params: { productId: props.productId },
+        })
+        .then((res) => {
+          setImages((oldImages: any) => {
+            return [...oldImages, ...res.data.links];
+          });
+        });
     }
   };
+
+  useEffect(() => {
+    props.sentImageData(images);
+  }, [images, props]);
   return (
     <>
       <form
@@ -67,30 +78,32 @@ export default function ProductForm(props: any) {
             {...register("description")}
           />
         </div>
-        {props.isNewProduct ? (
-          <div></div>
-        ) : (
-          <div className="flex-col ">
-            <Label
-              className="text-slate-200"
-              htmlFor="productPrice"
-              value="Photos"
-            />
 
-            <div>
-              <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 mt-2 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
-                <img src={upload.src} alt="upload" width={22} height={22} />
-                Upload{" "}
-                <input
-                  onChange={uploadImages}
-                  multiple
-                  className="hidden"
-                  type="file"
-                ></input>
-              </label>
-            </div>
+        <Label
+          className="text-slate-200"
+          htmlFor="productPrice"
+          value="Photos"
+        />
+        <div className="flex flex-wrap gap-2">
+          {!!images?.length &&
+            images.map((link: any) => (
+              <div key={link} className="h-24">
+                <img className="max-h-24 rounded-md" src={link} alt="link" />
+              </div>
+            ))}
+          <div>
+            <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
+              <img src={upload.src} alt="upload" width={22} height={22} />
+              Upload{" "}
+              <input
+                onChange={uploadImages}
+                multiple
+                className="hidden"
+                type="file"
+              ></input>
+            </label>
           </div>
-        )}
+        </div>
 
         <div>
           <Label
