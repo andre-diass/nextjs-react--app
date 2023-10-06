@@ -9,14 +9,13 @@ interface IForm {
   name: string;
   description: string;
   price: number;
-  images: Array<string>;
 }
 
 export default function ProductForm(props: any) {
   const form = useForm<IForm>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
-  const [images, setImages] = useState(props.existingImages || []);
+  const [images, setImages] = useState(props.imageLinks || []);
 
   const uploadImages = async (event: any) => {
     const files = event.target?.files;

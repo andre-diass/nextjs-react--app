@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
+
 interface Product {
   description: string;
   name: string;

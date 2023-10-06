@@ -9,6 +9,7 @@ export default function DeleteProduct() {
   const router = useRouter();
   const productID = router.query.id ? router.query.id[0] : null; // fix this line later
 
+  //this should not be implemented here => REFACTOR LATER
   async function getProductName() {
     const response = await axios.get("/api/products/getProduct", {
       params: { productId: productID },

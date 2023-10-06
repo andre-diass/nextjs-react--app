@@ -36,14 +36,11 @@ export default async function handle(
 
   const files = await parseFormPromise;
 
-  let imageSerialNumber = 0;
   const productID = req.query.productId;
   const links = [];
 
   for (const file of files.file) {
-    imageSerialNumber++;
-
-    const newFileName = productID + imageSerialNumber.toString();
+    const newFileName = productID + Date.now().toString();
 
     await client.send(
       new PutObjectCommand({
