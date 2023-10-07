@@ -4,6 +4,7 @@ import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
 
 interface IForm {
   name: string;
@@ -16,8 +17,10 @@ export default function ProductForm(props: any) {
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
   const [images, setImages] = useState(props.imageLinks || []);
+  const [isImageLoading, setIsImageLoading] = useState(false);
 
   const uploadImages = async (event: any) => {
+    setIsImageLoading(true);
     const files = event.target?.files;
     if (files.length > 0) {
       const data = new FormData();
@@ -33,7 +36,8 @@ export default function ProductForm(props: any) {
           setImages((oldImages: any) => {
             return [...oldImages, ...res.data.links];
           });
-        });
+        })
+        .finally(() => setIsImageLoading(false));
     }
   };
 
@@ -90,6 +94,12 @@ export default function ProductForm(props: any) {
                 <img className="max-h-24 rounded-md" src={link} alt="link" />
               </div>
             ))}
+          {isImageLoading && (
+            <div className="max-h-24 p-3">
+              <BounceLoader color="#233876" />
+            </div>
+          )}
+
           <div>
             <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
               <img src={upload.src} alt="upload" width={22} height={22} />
