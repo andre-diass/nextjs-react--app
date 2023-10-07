@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import clientPromise from "../../../lib/mongodb";
-import { getSession } from "next-auth/react";
+import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
@@ -12,8 +11,6 @@ export default async function handler(
     const session = await getServerSession(req, res, authOptions);
     const client = await clientPromise;
     const db = client.db("test");
-
-    console.log(session?.user?.email);
 
     const collection = db.collection("users");
 

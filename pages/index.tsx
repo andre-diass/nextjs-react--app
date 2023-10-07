@@ -1,6 +1,5 @@
 import Home from "@/components/templates/Home";
 import { getServerSession } from "next-auth/next";
-import { useSession } from "next-auth/react";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Index() {
@@ -14,3 +13,4 @@ export async function getServerSideProps(context: any) {
 
   return { props: {} };
 }
+//teste vercel integration
