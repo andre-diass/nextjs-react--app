@@ -18,6 +18,7 @@ export default function ProductForm(props: any) {
   const { errors } = formState;
   const [images, setImages] = useState(props.imageLinks || []);
   const [isImageLoading, setIsImageLoading] = useState(false);
+  const [isImageHovered, setIsImageHovered] = useState(false);
 
   const uploadImages = async (event: any) => {
     setIsImageLoading(true);
@@ -29,7 +30,7 @@ export default function ProductForm(props: any) {
       }
 
       await axios
-        .post("/api/products/uploadImage", data, {
+        .post("/api/products/uploadImages", data, {
           params: { productId: props.productId },
         })
         .then((res) => {
@@ -38,6 +39,25 @@ export default function ProductForm(props: any) {
           });
         })
         .finally(() => setIsImageLoading(false));
+    }
+  };
+
+  const deleteImage = async (indexToDelete: number) => {
+    try {
+      await axios
+        .post("/api/products/deleteImage", {
+          imageSrc: images[indexToDelete],
+        })
+        .then((res) => {
+          const updatedImages = images.filter(
+            (_: any, index: number) => index !== indexToDelete
+          );
+          console.log(res);
+
+          setImages(updatedImages);
+        });
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -89,9 +109,16 @@ export default function ProductForm(props: any) {
         />
         <div className="flex flex-wrap gap-2">
           {!!images?.length &&
-            images.map((link: any) => (
-              <div key={link} className="h-24">
-                <img className="max-h-24 rounded-md" src={link} alt="link" />
+            images.map((link: string, index: number) => (
+              <div key={link} className="h-24 relative">
+                <img
+                  className="max-h-24 rounded-md hover:blur-sm transition-transform transform-gpu "
+                  onClick={(e) => deleteImage(index)}
+                  onMouseEnter={() => setIsImageHovered(true)}
+                  onMouseLeave={() => setIsImageHovered(false)}
+                  src={link}
+                  alt="link"
+                />
               </div>
             ))}
           {isImageLoading && (

@@ -6,6 +6,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    console.log("teste");
+
     const response = await api.post("/createProduct", req.body);
     console.log("Response:", response.data);
     return res.json(response.data);

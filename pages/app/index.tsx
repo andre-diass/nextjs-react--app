@@ -1,4 +1,5 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
+import axios from "axios";
 
 export default function App() {
   return (
