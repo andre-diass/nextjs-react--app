@@ -4,7 +4,7 @@ import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 
 interface IForm {
   name: string;

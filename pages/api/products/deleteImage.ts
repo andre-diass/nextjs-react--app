@@ -15,8 +15,6 @@ export default async function deleteImage(
   const segments = pathname.split("/");
   const objectKey = segments[segments.length - 1] as string;
 
-  console.log(typeof objectKey);
-
   const clientConfig: S3ClientConfig = {
     region: process.env.REGION,
     credentials: {
