@@ -4,6 +4,7 @@ import store from "@/public/store.svg";
 import dashboard from "@/public/dashboard.svg";
 import products from "@/public/products.svg";
 import orders from "@/public/orders.svg";
+import categories from "@/public/categories.svg";
 import settings from "@/public/settings.svg";
 import { StaticImageData } from "next/image";
 import { signOut } from "next-auth/react";
@@ -44,6 +45,7 @@ export default function Navbar() {
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
             { to: "/app/products", logoSrc: products, title: "Products" },
             { to: "/orders", logoSrc: orders, title: "Orders" },
+            { to: "/app/categories", logoSrc: categories, title: "Categories" },
             { to: "/settings", logoSrc: settings, title: "Settings" },
           ]}
         />
