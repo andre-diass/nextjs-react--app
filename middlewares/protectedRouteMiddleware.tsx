@@ -9,7 +9,13 @@ export async function protectedRouteMiddleware({
   const session = await getServerSession(req, res, authOptions);
 
   if (session === null) {
-    return { notFound: true };
+    return {
+      notFound: true,
+      redirect: {
+        destination: "/", // Replace with your desired destination path
+        permanent: true, // Set to true if the redirect is permanent
+      },
+    };
   }
 
   return {

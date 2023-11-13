@@ -6,8 +6,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.body);
     const response = await api.post("/addCategory", req.body);
+    console.log(response.data);
+
     return res.json(response.data);
   } catch (error) {
     console.error("Error in API handler:", error);
