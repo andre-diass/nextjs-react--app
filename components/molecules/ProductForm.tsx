@@ -5,11 +5,13 @@ import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
+import { getCategories } from "@/services/getCategories";
 
 interface IForm {
   name: string;
   description: string;
   price: number;
+  category: string;
 }
 
 export default function ProductForm(props: any) {
@@ -90,6 +92,25 @@ export default function ProductForm(props: any) {
             })}
           />
           <p className="text-red-500 text-sm">{errors.name?.message}</p>
+        </div>
+        <div>
+          <Label
+            className="text-slate-200 block"
+            htmlFor="category"
+            value="Category"
+          />
+          <select
+            className="my-2 rounded-lg text-black"
+            {...register("category")}
+          >
+            <option value="">uncategorized</option>
+            {props.categories.length > 0 &&
+              props.categories.map((e: any) => (
+                <option key={e._id} value={e._name}>
+                  {e.name}
+                </option>
+              ))}
+          </select>
         </div>
         <div>
           <Label className="text-slate-200" htmlFor="email" value="Descrição" />

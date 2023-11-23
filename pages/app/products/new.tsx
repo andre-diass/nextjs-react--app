@@ -1,10 +1,14 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
+import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { getUser } from "@/services/getUserId";
+import { getCategories } from "@/services/getCategories";
+import { useState } from "react";
 
-export default function NewProduct({ userId }: any) {
+export default function NewProduct({ userId, savedCategories }: any) {
+  const [categories, setCategories] = useState<[]>(savedCategories);
   let imageLinks: Array<string>;
   async function createProduct(body: any) {
     axios
@@ -38,6 +42,7 @@ export default function NewProduct({ userId }: any) {
         isInputRequired={true}
         isNewProduct={true}
         sentImageData={handleImageData}
+        categories={savedCategories}
       ></ProductForm>
     </>
   );
@@ -52,11 +57,15 @@ export const getServerSideProps = async function (
   const userEmail = props?.session.user?.email as string;
 
   const user = await getUser(userEmail);
+  const categories = await getCategories(user?._id);
+
+  const serializedCategories = JSON.parse(JSON.stringify(categories));
 
   return {
     props: {
       ...props,
       userId: user?._id,
+      savedCategories: serializedCategories,
       //data: data as any,
     },
   };
