@@ -1,10 +1,10 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
-import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
+import { getUser } from "@/services/getUserId";
 
-export default function NewProduct() {
-  const router = useRouter();
+export default function NewProduct({ userId }: any) {
   let imageLinks: Array<string>;
   async function createProduct(body: any) {
     axios
@@ -12,22 +12,11 @@ export default function NewProduct() {
       .catch((x) => console.error(x));
   }
 
-  async function getUserId() {
-    return axios
-      .get("/api/accountID")
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => router.push("/app/products"));
-  }
-
   const onSubmit = async (data: any) => {
     try {
-      const userID = await getUserId();
       const bodyWithAccountID = {
         ...data,
-        userId: userID,
+        userId: userId,
         imageLinks: imageLinks,
       };
 
@@ -54,4 +43,21 @@ export default function NewProduct() {
   );
 }
 
-export const getServerSideProps = protectedRouteMiddleware;
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+
+  const userEmail = props?.session.user?.email as string;
+
+  const user = await getUser(userEmail);
+
+  return {
+    props: {
+      ...props,
+      userId: user?._id,
+      //data: data as any,
+    },
+  };
+};
