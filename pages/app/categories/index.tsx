@@ -44,6 +44,13 @@ export default function Categories({ userId, savedCategories }: any) {
     setName(category.name);
   }
 
+  async function handleDeleteButton(categoryID: string) {
+    await axios.delete("/api/categories/deleteCategory", {
+      params: { categoryId: categoryID },
+    });
+    fetchCategories();
+  }
+
   return (
     <>
       <h1 className="text-xl mb-4">Categories</h1>
@@ -84,7 +91,12 @@ export default function Categories({ userId, savedCategories }: any) {
                     >
                       edit
                     </button>
-                    <button className="btn-default">delete</button>
+                    <button
+                      onClick={() => handleDeleteButton(category?._id)}
+                      className="btn-default"
+                    >
+                      delete
+                    </button>
                   </td>
                 </div>
               </tr>
