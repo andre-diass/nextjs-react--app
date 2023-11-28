@@ -29,7 +29,7 @@ export default async function deleteImage(
 
   try {
     const data = await client.send(
-      new DeleteObjectCommand({ Bucket: "upload-png-4567", Key: objectKey })
+      new DeleteObjectCommand({ Bucket: "upload-prod-3434", Key: objectKey })
     );
     console.log("Success. Object deleted.", data);
     return res.status(200).json({ message: "Success. Object deleted." });
