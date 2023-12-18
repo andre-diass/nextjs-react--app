@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { useRouter } from "next/router";
 import store from "@/public/store.svg";
 import dashboard from "@/public/dashboard.svg";
 import products from "@/public/products.svg";
@@ -14,13 +15,17 @@ interface NavOptionsProps {
 }
 
 function NavOptions({ options }: NavOptionsProps) {
+  const { pathname } = useRouter();
+
   return (
     <ul>
       {options.map((option) => (
         <Link
           href={option.to}
           key={"key" + option.to}
-          className="flex items-center gap-2 my-2"
+          className={`flex items-center gap-2 my-2 ${
+            pathname === option.to ? "bg-blue-500" : ""
+          }`}
         >
           <img
             src={option.logoSrc.src}
