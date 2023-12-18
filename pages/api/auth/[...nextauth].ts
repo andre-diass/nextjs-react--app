@@ -18,23 +18,29 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(clientPromise) as Adapter | undefined,
   callbacks: {
-    async jwt({ session, account, token, user, profile }) {
+    async jwt({ account, token, user }) {
+      console.log("JWT ACCOUNT =>>>>> ", account);
+      console.log("JWT TOKEN =>>>>> ", token);
+      console.log("JWT USER =>>>>> ", user);
+
       if (account && user) {
         const response = await api.post("/login", {
           userID: user.id,
           accountID: account.providerAccountId,
         });
 
-        token = response.data;
+        token.apiToken = response.data;
+        console.log("CHANGED TOKEN:", token);
 
         return token;
       }
+      return token;
     },
-    async session({ session, token }) {
-      return {
-        ...session,
-        token,
-      };
+    async session({ session, token, token: { apiToken } }) {
+      console.log("SESSION SESSION =>>>>> ", session);
+      console.log("SESSION TOKEN =>>>>> ", token);
+
+      return { ...session, apiToken };
     },
   },
   session: { strategy: "jwt" },
