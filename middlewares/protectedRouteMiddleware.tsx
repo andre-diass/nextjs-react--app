@@ -6,9 +6,11 @@ export async function protectedRouteMiddleware({
   req,
   res,
 }: GetServerSidePropsContext) {
-  const session = await getServerSession(req, res, authOptions);
+  const session: any = await getServerSession(req, res, authOptions);
 
   console.log("THE AUTH ROUTE HAS BEEN CALLED AGAIN");
+  console.log(session);
+
   console.log(session?.apiToken);
 
   if (session === null) {
