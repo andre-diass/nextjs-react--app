@@ -44,7 +44,7 @@ export default async function handle(
 
     await client.send(
       new PutObjectCommand({
-        Bucket: "upload-prod-3434",
+        Bucket: "upload-png-4567",
         Key: newFileName,
         Body: fs.readFileSync(file.path),
         ACL: "public-read",

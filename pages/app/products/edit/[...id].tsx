@@ -3,70 +3,36 @@ import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware
 import { useRouter } from "next/router";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
-import { useEffect, useState } from "react";
 import IProduct from "@/types/products";
 import { GetServerSidePropsContext } from "next";
-import { getUser } from "@/services/user/getUserId";
 import { getCategories } from "@/services/categories/getCategories";
+import { getProduct } from "@/services/products/getProduct";
 
-export default function Edit({ savedCategories }: any) {
+export default function Edit({ savedCategories, product, productId }: any) {
   const router = useRouter();
-  const [categories, setCategories] = useState<[]>(savedCategories);
-  const [productInfo, setProductInfo] = useState<IProduct>();
-  const productID = router.query.id ? router.query.id[0] : null; // refactor
-  let imageLinks: any;
-
-  //this should not be implemented here => REFACTOR
-  async function getProduct() {
-    const response = await axios.get("/api/products/getProduct", {
-      params: { productId: productID },
-    });
-    setProductInfo(response.data);
-  }
-
-  useEffect(() => {
-    getProduct();
-  }, [productID]);
-
-  const handleImageData = (data: Array<string>) => {
-    imageLinks = data;
-  };
 
   const onSubmit = async (data: IProduct) => {
     try {
-      const body = {
-        ...data,
-        imageLinks: imageLinks,
-      };
+      await axios.post("/api/products/updateProduct", data, {
+        params: { productId: productId },
+      });
 
-      updateProduct(body);
       router.push("/app/products");
     } catch (error) {
       console.error(error);
     }
   };
 
-  async function updateProduct(body: IProduct) {
-    axios
-      .post("/api/products/updateProduct", body, {
-        params: { productId: productID },
-      })
-      .catch((x) => console.error(x));
-  }
-
   return (
     <>
-      {productInfo && (
-        <ProductForm
-          onSubmit={onSubmit}
-          heading="Editar Produto"
-          isInputRequired={false}
-          isNewProduct={false}
-          sentImageData={handleImageData}
-          categories={savedCategories}
-          {...productInfo}
-        />
-      )}
+      <ProductForm
+        onSubmit={onSubmit}
+        heading="Editar Produto"
+        isInputRequired={false}
+        isNewProduct={false}
+        categories={savedCategories}
+        {...product}
+      />
     </>
   );
 }
@@ -77,18 +43,20 @@ export const getServerSideProps = async function (
   const { notFound, props } = await protectedRouteMiddleware(context);
   if (notFound) return { notFound };
 
-  const userEmail = props?.session.user?.email as string;
+  const userId = props?.userId;
+  const categories = await getCategories(userId);
 
-  const user = await getUser(userEmail);
-  const categories = await getCategories(user?._id);
-
-  const serializedCategories = JSON.parse(JSON.stringify(categories));
+  const { id } = context.query;
+  const productId = Array.isArray(id) ? id[0] : (id as string);
+  const product = await getProduct(productId);
 
   return {
     props: {
       ...props,
-      userId: user?._id,
-      savedCategories: serializedCategories,
+      userId,
+      productId,
+      product,
+      savedCategories: categories,
       //data: data as any,
     },
   };

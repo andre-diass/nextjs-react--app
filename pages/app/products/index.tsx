@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
 import { GetServerSidePropsContext } from "next";
