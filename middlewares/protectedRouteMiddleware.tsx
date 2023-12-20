@@ -6,21 +6,24 @@ export async function protectedRouteMiddleware({
   req,
   res,
 }: GetServerSidePropsContext) {
-  const session = await getServerSession(req, res, authOptions);
+  const session: any = await getServerSession(req, res, authOptions);
+  const apiToken = session.apiToken;
+  const userId = session.userId;
 
   if (session === null) {
     return {
       notFound: true,
       redirect: {
-        destination: "/", // Replace with your desired destination path
-        permanent: true, // Set to true if the redirect is permanent
+        destination: "/",
+        permanent: true,
       },
     };
   }
-
   return {
     props: {
       session,
+      userId,
+      apiToken,
     },
   };
 }

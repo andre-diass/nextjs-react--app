@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
+import { GetServerSidePropsContext } from "next";
+import { getProducts } from "@/services/products/getProducts";
 
 interface Product {
   description: string;
@@ -15,21 +16,12 @@ interface Product {
   _id: string;
 }
 
-export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
+interface Props {
+  persistedProducts: [Product];
+}
 
-  async function makeGetRequest() {
-    const userID = await axios.get("/api/accountID");
-
-    const response = await axios.get("/api/products/getProducts", {
-      params: { userId: userID.data },
-    });
-
-    setProducts(response.data);
-  }
-  useEffect(() => {
-    makeGetRequest();
-  }, []);
+export default function Products({ persistedProducts }: Props) {
+  const [products, setProducts] = useState<Product[]>(persistedProducts);
 
   return (
     <>
@@ -68,4 +60,22 @@ export default function Products() {
   );
 }
 
-export const getServerSideProps = protectedRouteMiddleware;
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+
+  const userId = props?.userId;
+
+  const products = await getProducts(userId);
+  console.log(products);
+
+  return {
+    props: {
+      ...props,
+      userId: userId,
+      persistedProducts: products,
+    },
+  };
+};

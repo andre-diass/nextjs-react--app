@@ -2,40 +2,23 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import { useEffect, useState } from "react";
+import { GetServerSidePropsContext } from "next";
+import { getProduct } from "@/services/products/getProduct";
+import IProduct from "@/types/products";
 
-export default function DeleteProduct() {
-  const [productName, setProductName] = useState("");
+interface Props {
+  productId: string;
+  product: IProduct;
+}
+
+export default function DeleteProduct({ productId, product }: Props) {
   const router = useRouter();
-  const productID = router.query.id ? router.query.id[0] : null; // fix this line later
 
-  //this should not be implemented here => REFACTOR LATER
-  async function getProductName() {
-    const response = await axios.get("/api/products/getProduct", {
-      params: { productId: productID },
-    });
-    setProductName(response?.data?.name);
-  }
-
-  useEffect(() => {
-    if (!productID) {
-      return;
-    }
-
-    getProductName();
-  }, [productID]);
-
-  async function deleteProduct() {
-    axios
-      .delete("/api/products/deleteProduct", {
-        params: { productId: productID },
-      })
-      .catch((x) => console.error(x));
-  }
-
-  const onDelete = async () => {
+  const deleteProduct = async () => {
     try {
-      deleteProduct();
+      axios.delete("/api/products/deleteProduct", {
+        params: { productId: productId },
+      });
       router.push("/app/products");
     } catch (error) {
       console.error(error);
@@ -45,10 +28,10 @@ export default function DeleteProduct() {
   return (
     <>
       <h1 className="text-lg text-center mb-3">
-        Do you really want to delete {productName} ?
+        Do you really want to delete {product.name} ?
       </h1>
       <div className="flex gap-2 justify-center">
-        <button className="btn-red" onClick={onDelete}>
+        <button className="btn-red" onClick={deleteProduct}>
           Yes
         </button>
         <button
@@ -61,4 +44,16 @@ export default function DeleteProduct() {
     </>
   );
 }
-export const getServerSideProps = protectedRouteMiddleware;
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+  const { id } = context.query;
+  const productId = Array.isArray(id) ? id[0] : (id as string);
+  const product = await getProduct(productId);
+
+  return {
+    props: { ...props, productId, product },
+  };
+};

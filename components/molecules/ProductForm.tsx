@@ -5,7 +5,7 @@ import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
-import { getCategories } from "@/services/getCategories";
+import { getCategories } from "@/services/categories/getCategories";
 
 interface IForm {
   name: string;
@@ -63,13 +63,14 @@ export default function ProductForm(props: any) {
     }
   };
 
-  useEffect(() => {
-    props.sentImageData(images);
-  }, [images, props]);
+  const onSubmit = async (data: IForm) => {
+    props.onSubmit({ ...data, imageLinks: images });
+  };
+
   return (
     <>
       <form
-        onSubmit={handleSubmit(props.onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         noValidate
         className="flex m-10 mx-20 flex-col gap-4  "
       >
