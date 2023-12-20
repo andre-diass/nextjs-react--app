@@ -5,7 +5,7 @@ import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
-import { getCategories } from "@/services/getCategories";
+import { getCategories } from "@/services/categories/getCategories";
 
 interface IForm {
   name: string;

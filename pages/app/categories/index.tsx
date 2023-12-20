@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
-import { getUser } from "@/services/getUserId";
-import { getCategories } from "@/services/getCategories";
+import { getUser } from "@/services/user/getUserId";
+import { getCategories } from "@/services/categories/getCategories";
 
 export default function Categories({ userId, savedCategories }: any) {
   interface ICategory {
@@ -12,7 +12,7 @@ export default function Categories({ userId, savedCategories }: any) {
     name?: number;
   }
   const [name, setName] = useState<string>("");
-  const [categories, setCategories] = useState<[]>(savedCategories);
+  const [categories, setCategories] = useState<ICategory[]>(savedCategories);
   const [editedCategory, setEditedCategory] = useState<ICategory | null>(null);
   async function fetchCategories() {
     const response = await getCategories(userId);
@@ -113,19 +113,16 @@ export const getServerSideProps = async function (
   const { notFound, props } = await protectedRouteMiddleware(context);
   if (notFound) return { notFound };
 
-  const userEmail = props?.session.user?.email as string;
+  const userId = props?.userId;
 
-  const user = await getUser(userEmail);
-
-  const categories = await getCategories(user?._id);
-
-  const serializedCategories = JSON.parse(JSON.stringify(categories));
+  const categories = await getCategories(userId);
+  console.log(categories);
 
   return {
     props: {
       ...props,
-      userId: user?._id,
-      savedCategories: serializedCategories,
+      userId: userId,
+      savedCategories: categories,
       //data: data as any,
     },
   };

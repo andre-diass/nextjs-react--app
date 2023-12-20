@@ -6,8 +6,8 @@ import ProductForm from "@/components/molecules/ProductForm";
 import { useEffect, useState } from "react";
 import IProduct from "@/types/products";
 import { GetServerSidePropsContext } from "next";
-import { getUser } from "@/services/getUserId";
-import { getCategories } from "@/services/getCategories";
+import { getUser } from "@/services/user/getUserId";
+import { getCategories } from "@/services/categories/getCategories";
 
 export default function Edit({ savedCategories }: any) {
   const router = useRouter();

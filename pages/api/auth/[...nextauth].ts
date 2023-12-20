@@ -25,13 +25,14 @@ export const authOptions: NextAuthOptions = {
         });
 
         token.apiToken = response.data;
+        token.userId = user.id;
 
         return token;
       }
       return token;
     },
-    async session({ session, token, token: { apiToken } }) {
-      return { ...session, apiToken };
+    async session({ session, token, token: { apiToken }, token: { userId } }) {
+      return { ...session, apiToken, userId };
     },
   },
   session: { strategy: "jwt" },

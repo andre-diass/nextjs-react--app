@@ -3,8 +3,8 @@ import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import { getUser } from "@/services/getUserId";
-import { getCategories } from "@/services/getCategories";
+import { getUser } from "@/services/user/getUserId";
+import { getCategories } from "@/services/categories/getCategories";
 import { useState } from "react";
 
 export default function NewProduct({ userId, savedCategories }: any) {
