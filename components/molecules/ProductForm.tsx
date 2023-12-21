@@ -85,6 +85,7 @@ export default function ProductForm(props: any) {
             id="productName"
             type="string"
             className="mt-2"
+            placeholder={props.name}
             {...register("name", {
               required: {
                 value: props.isInputRequired,
@@ -119,6 +120,7 @@ export default function ProductForm(props: any) {
             id="productDescription"
             type="string"
             className="mt-2"
+            placeholder={props.description}
             style={{ height: "80px" }}
             {...register("description")}
           />
@@ -173,6 +175,7 @@ export default function ProductForm(props: any) {
             id="productPrice"
             type="number"
             className="mt-2"
+            placeholder={props.price}
             {...register("price", {
               required: {
                 value: props.isInputRequired,
