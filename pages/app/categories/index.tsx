@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
-import { getUser } from "@/services/user/getUserId";
 import { getCategories } from "@/services/categories/getCategories";
 
 export default function Categories({ userId, savedCategories }: any) {

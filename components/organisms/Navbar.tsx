@@ -9,6 +9,7 @@ import categories from "@/public/categories.svg";
 import settings from "@/public/settings.svg";
 import { StaticImageData } from "next/image";
 import { signOut } from "next-auth/react";
+import { useState } from "react";
 
 interface NavOptionsProps {
   options: { to: string; logoSrc: StaticImageData; title: string }[];
@@ -23,8 +24,8 @@ function NavOptions({ options }: NavOptionsProps) {
         <Link
           href={option.to}
           key={"key" + option.to}
-          className={`flex items-center gap-2 my-2 ${
-            pathname === option.to ? "bg-blue-500" : ""
+          className={`flex items-center gap-2 my-2 pr-2 rounded-sm ${
+            pathname === option.to ? "bg-white text-blue-800" : ""
           }`}
         >
           <img
@@ -32,6 +33,9 @@ function NavOptions({ options }: NavOptionsProps) {
             alt={option.title}
             width={22}
             height={16}
+            style={{
+              fill: "#3498db",
+            }}
           />
           {option.title}
         </Link>
@@ -42,7 +46,7 @@ function NavOptions({ options }: NavOptionsProps) {
 
 export default function Navbar() {
   return (
-    <aside className="text-white p-4 ">
+    <aside className="text-white py-4 pl-4  ">
       <nav className="flex flex-col">
         <NavOptions
           options={[

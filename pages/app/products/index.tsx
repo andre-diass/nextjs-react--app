@@ -6,26 +6,71 @@ import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
 import { GetServerSidePropsContext } from "next";
 import { getProducts } from "@/services/products/getProducts";
-
-interface Product {
-  description: string;
-  name: string;
-  price: string;
-  userId: string;
-  __v: number;
-  _id: string;
-}
+import CustomTable from "@/components/templates/CustomTable";
+import IProduct from "@/types/products";
 
 interface Props {
-  persistedProducts: [Product];
+  products: Array<IProduct>;
 }
 
-export default function Products({ persistedProducts }: Props) {
-  const [products, setProducts] = useState<Product[]>(persistedProducts);
+export default function Products({ products }: Props) {
+  const cols = [
+    { key: "name", label: "name" },
+    { key: "price", label: "price" },
+    { key: "userId", label: "userId" },
+  ];
+
+  const actionCols = [
+    {
+      label: "teste",
+      render: (item: IProduct) => (
+        <>
+          <Link href={"products/edit/" + item._id}>
+            <img src={edit.src} alt="Icon" width={22} height={16} />
+            Edit{" "}
+          </Link>
+          <Link href={"products/delete/" + item._id}>
+            <img src={trash.src} alt="Icon" width={22} height={16} />
+            Delete
+          </Link>
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
-      <Link
+      <CustomTable
+        cols={cols}
+        actionCols={actionCols}
+        data={products}
+      ></CustomTable>
+    </>
+  );
+}
+
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+
+  const userId = props?.userId;
+
+  const products = await getProducts(userId);
+  console.log(products);
+
+  return {
+    props: {
+      ...props,
+      userId: userId,
+      products: products,
+    },
+  };
+};
+
+/*
+<Link
         className="bg-slate-100 rounded-lg p-2 text-zinc-900"
         href={"/app/products/new"}
       >
@@ -56,26 +101,6 @@ export default function Products({ persistedProducts }: Props) {
           ))}
         </tbody>
       </table>
-    </>
-  );
-}
 
-export const getServerSideProps = async function (
-  context: GetServerSidePropsContext
-) {
-  const { notFound, props } = await protectedRouteMiddleware(context);
-  if (notFound) return { notFound };
 
-  const userId = props?.userId;
-
-  const products = await getProducts(userId);
-  console.log(products);
-
-  return {
-    props: {
-      ...props,
-      userId: userId,
-      persistedProducts: products,
-    },
-  };
-};
+*/
