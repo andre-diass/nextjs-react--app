@@ -10,9 +10,11 @@ export default function ProtectedLayout({
     <>
       <div className="bg-blue-900 min-h-screen flex">
         <Navbar />
-        <main className="bg-slate-900 flex-grow my-2 mr-2 rounded-lg p-4">
-          {children}
-        </main>
+        <div className="flex-grow overflow-x-auto ">
+          <main className="bg-neutral-100 my-2 mr-2 min-h-screen rounded-lg p-4">
+            {children}
+          </main>
+        </div>
       </div>
     </>
   );

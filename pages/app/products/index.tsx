@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import { useState } from "react";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
 import { GetServerSidePropsContext } from "next";
@@ -17,22 +16,25 @@ export default function Products({ products }: Props) {
   const cols = [
     { key: "name", label: "name" },
     { key: "price", label: "price" },
-    { key: "userId", label: "userId" },
+    { key: "_id", label: "id" },
   ];
 
   const actionCols = [
     {
-      label: "teste",
+      label: "",
       render: (item: IProduct) => (
         <>
-          <Link href={"products/edit/" + item._id}>
-            <img src={edit.src} alt="Icon" width={22} height={16} />
-            Edit{" "}
-          </Link>
-          <Link href={"products/delete/" + item._id}>
-            <img src={trash.src} alt="Icon" width={22} height={16} />
-            Delete
-          </Link>
+          <div className="flex gap-2 px-2">
+            <Link className="flex" href={"products/edit/" + item._id}>
+              <img src={edit.src} alt="Icon" width={22} height={16} />
+              <p> Edit </p>
+            </Link>
+
+            <Link className="flex" href={"products/delete/" + item._id}>
+              <img src={trash.src} alt="Icon" width={22} height={16} />
+              <p> Delete</p>
+            </Link>
+          </div>
         </>
       ),
     },
