@@ -3,7 +3,7 @@ import THead from "../organisms/THead";
 import IProduct from "@/types/products";
 import { Table } from "../organisms/Table";
 import { TBody } from "../organisms/TBody";
-import { TDCol } from "../organisms/TDcol";
+import { TDCol } from "../organisms/TDCol";
 
 type Props = {
   cols: Array<{

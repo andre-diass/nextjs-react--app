@@ -14,9 +14,9 @@ interface Props {
 
 export default function Products({ products }: Props) {
   const cols = [
-    { key: "name", label: "name" },
-    { key: "price", label: "price" },
-    { key: "_id", label: "id" },
+    { key: "name", label: "Name" },
+    { key: "price", label: "Price" },
+    { key: "_id", label: "ID" },
   ];
 
   const actionCols = [
@@ -24,14 +24,32 @@ export default function Products({ products }: Props) {
       label: "",
       render: (item: IProduct) => (
         <>
-          <div className="flex gap-2 px-2">
-            <Link className="flex" href={"products/edit/" + item._id}>
-              <img src={edit.src} alt="Icon" width={22} height={16} />
+          <div className="flex gap-1">
+            <Link
+              className="flex bg-blue-800 p-2 text-white rounded-md"
+              href={"products/edit/" + item._id}
+            >
+              <img
+                className="hidden md:block"
+                src={edit.src}
+                alt="Icon"
+                width={22}
+                height={16}
+              />
               <p> Edit </p>
             </Link>
 
-            <Link className="flex" href={"products/delete/" + item._id}>
-              <img src={trash.src} alt="Icon" width={22} height={16} />
+            <Link
+              className="flex bg-red-500 p-2 text-white rounded-md"
+              href={"products/delete/" + item._id}
+            >
+              <img
+                className="hidden md:block"
+                src={trash.src}
+                alt="Icon"
+                width={22}
+                height={16}
+              />
               <p> Delete</p>
             </Link>
           </div>
@@ -70,39 +88,3 @@ export const getServerSideProps = async function (
     },
   };
 };
-
-/*
-<Link
-        className="bg-slate-100 rounded-lg p-2 text-zinc-900"
-        href={"/app/products/new"}
-      >
-        New product
-      </Link>
-
-      <table className="basic">
-        <thead>
-          <tr>
-            <th>Nome</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>
-                <Link href={"products/edit/" + product._id}>
-                  <img src={edit.src} alt="Icon" width={22} height={16} />
-                  Edit{" "}
-                </Link>
-                <Link href={"products/delete/" + product._id}>
-                  <img src={trash.src} alt="Icon" width={22} height={16} />
-                  Delete
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-
-*/
