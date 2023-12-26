@@ -35,13 +35,13 @@ export default function CustomTable({
           </THead>
           <TBody>
             {data.map((item, index) => {
+              console.log(item);
+
               return (
                 <tr key={index}>
                   {[
                     ...cols.map((col) => (
-                      <TDCol key={col.key}>
-                        {item[col.key as keyof IProduct]}
-                      </TDCol>
+                      <TDCol key={col.key}>{item[col.key]}</TDCol>
                     )),
                     ...actionCols?.map((acol) => (
                       <TDCol key={acol.label}> {acol.render(item)}</TDCol>

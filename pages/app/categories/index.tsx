@@ -1,9 +1,10 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import { useState } from "react";
-import { Label, TextInput } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { TextInput } from "flowbite-react";
 import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
+import CustomTable from "@/components/templates/CustomTable";
 
 export default function Categories({ userId, savedCategories }: any) {
   interface ICategory {
@@ -43,21 +44,44 @@ export default function Categories({ userId, savedCategories }: any) {
     setName(category.name);
   }
 
-  async function handleDeleteButton(categoryID: string) {
+  async function handleDeleteButton(category: ICategory) {
     await axios.delete("/api/categories/deleteCategory", {
-      params: { categoryId: categoryID },
+      params: { categoryId: category._id },
     });
     fetchCategories();
   }
+  const cols = [{ key: "name", label: "Name" }];
+
+  const actionCols = [
+    {
+      label: "",
+      render: (item: ICategory) => (
+        <>
+          <button
+            onClick={() => handleEditButton(item)}
+            className="btn-default mr-1"
+          >
+            edit
+          </button>
+          <button
+            onClick={() => handleDeleteButton(item)}
+            className="btn-default"
+          >
+            delete
+          </button>
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
-      <h1 className="text-xl mb-4">Categories</h1>
-      <Label className="text-white">
+      <h1 className="text-xl mb-4 text-black">Categories</h1>
+      <label className="text-black ">
         {editedCategory
           ? `Edit category ${editedCategory.name}`
           : "Create new category"}
-      </Label>
+      </label>
       <form onSubmit={saveCategory} className="flex gap-1">
         <TextInput
           className="text-black min-w-fit"
@@ -71,37 +95,11 @@ export default function Categories({ userId, savedCategories }: any) {
         </button>
       </form>
 
-      <table className="basic mt-4">
-        <thead>
-          <tr>
-            <td>Category name</td>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.length > 0 &&
-            categories.map((category: any) => (
-              <tr key={category?._id}>
-                <td>{category?.name}</td>
-                <div className="flex">
-                  <td>
-                    <button
-                      onClick={() => handleEditButton(category)}
-                      className="btn-default mr-1"
-                    >
-                      edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteButton(category?._id)}
-                      className="btn-default"
-                    >
-                      delete
-                    </button>
-                  </td>
-                </div>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <CustomTable
+        cols={cols}
+        actionCols={actionCols}
+        data={categories}
+      ></CustomTable>
     </>
   );
 }
