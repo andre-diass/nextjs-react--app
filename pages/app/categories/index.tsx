@@ -61,13 +61,10 @@ export default function Categories({ userId, savedCategories }: any) {
             onClick={() => handleEditButton(item)}
             className="btn-default mr-1"
           >
-            edit
+            Edit
           </button>
-          <button
-            onClick={() => handleDeleteButton(item)}
-            className="btn-default"
-          >
-            delete
+          <button onClick={() => handleDeleteButton(item)} className="btn-red">
+            Delete
           </button>
         </>
       ),

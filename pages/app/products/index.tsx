@@ -17,6 +17,7 @@ export default function Products({ products }: Props) {
     { key: "name", label: "Name" },
     { key: "price", label: "Price" },
     { key: "_id", label: "ID" },
+    { key: "createdAt", label: "Created At" },
   ];
 
   const actionCols = [
@@ -40,7 +41,7 @@ export default function Products({ products }: Props) {
             </Link>
 
             <Link
-              className="flex bg-red-500 p-2 text-white rounded-md"
+              className="flex bg-red-600 p-2 text-white rounded-md"
               href={"products/delete/" + item._id}
             >
               <img
@@ -58,12 +59,17 @@ export default function Products({ products }: Props) {
     },
   ];
 
+  const customDataRender = {
+    createdAt: (item: IProduct) => new Date(item.createdAt).toLocaleString(),
+  };
+
   return (
     <>
       <CustomTable
         cols={cols}
         actionCols={actionCols}
         data={products}
+        customDataRender={customDataRender}
       ></CustomTable>
     </>
   );

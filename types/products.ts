@@ -5,4 +5,5 @@ export default interface IProduct {
   price: string;
   userId: string;
   imageLinks: Array<string>;
+  createdAt: Date;
 }
