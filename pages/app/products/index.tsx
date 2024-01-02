@@ -17,7 +17,7 @@ export default function Products({ products }: Props) {
     { key: "name", label: "Name" },
     { key: "price", label: "Price" },
     { key: "_id", label: "ID" },
-    { key: "createdAt", label: "Created At" },
+    // { key: "createdAt", label: "Created At" },
   ];
 
   const actionCols = [

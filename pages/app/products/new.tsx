@@ -3,12 +3,15 @@ import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
+import { useRouter } from "next/router";
 
 export default function NewProduct({ userId, savedCategories }: any) {
+  const router = useRouter();
   async function createProduct(body: any) {
     axios
       .post("/api/products/createProduct", body)
-      .catch((x) => console.error(x));
+      .catch((x) => console.error(x))
+      .finally(() => router.push("/products"));
   }
 
   const onSubmit = async (data: any) => {

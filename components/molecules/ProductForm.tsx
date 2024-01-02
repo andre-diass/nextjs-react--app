@@ -4,7 +4,7 @@ import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { BounceLoader, GridLoader, HashLoader } from "react-spinners";
+import { BounceLoader } from "react-spinners";
 import { getCategories } from "@/services/categories/getCategories";
 
 interface IForm {
@@ -72,23 +72,25 @@ export default function ProductForm(props: any) {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex m-10 mx-20 flex-col gap-4  "
+        className="flex m-10 mx-20 flex-col gap-4 bg-white p-6 rounded-md shadow-md"
       >
-        <h1 className="text-xl font-medium dark:text-white">{props.heading}</h1>
+        <h1 className="text-xl font-medium text-black dark:text-white">
+          {props.heading}
+        </h1>
         <div>
           <Label
-            className="text-slate-200"
+            className="text-black dark:text-white"
             htmlFor="productName"
             value="Nome do produto"
           />
           <TextInput
             id="productName"
             type="string"
-            className="mt-2"
+            className="mt-2 bg-gray-100 rounded-md"
             {...register("name", {
               required: {
                 value: props.isInputRequired,
-                message: "Nome do produto é obrigtório",
+                message: "Nome do produto é obrigatório",
               },
             })}
           />
@@ -96,12 +98,12 @@ export default function ProductForm(props: any) {
         </div>
         <div>
           <Label
-            className="text-slate-200 block"
+            className="text-black dark:text-white block"
             htmlFor="category"
-            value="Category"
+            value="Categoria"
           />
           <select
-            className="my-2 rounded-lg text-black"
+            className="my-2 rounded-lg text-black bg-gray-100"
             {...register("category")}
           >
             <option value="">uncategorized</option>
@@ -114,25 +116,32 @@ export default function ProductForm(props: any) {
           </select>
         </div>
         <div>
-          <Label className="text-slate-200" htmlFor="email" value="Descrição" />
+          <Label
+            className="text-black dark:text-white"
+            htmlFor="email"
+            value="Descrição"
+          />
           <TextInput
             id="productDescription"
             type="string"
-            className="mt-2"
+            className="mt-2 bg-gray-100 rounded-md"
             style={{ height: "80px" }}
             {...register("description")}
           />
         </div>
 
         <Label
-          className="text-slate-200"
+          className="text-black dark:text-white"
           htmlFor="productPrice"
           value="Photos"
         />
         <div className="flex flex-wrap gap-2">
           {!!images?.length &&
             images.map((link: string, index: number) => (
-              <div key={link} className="h-24 relative">
+              <div
+                key={link}
+                className="h-24 relative bg-white border border-gray-200 rounded-md hover:blur-sm transition-transform transform-gpu"
+              >
                 <img
                   className="max-h-24 rounded-md hover:blur-sm transition-transform transform-gpu "
                   onClick={(e) => deleteImage(index)}
@@ -144,13 +153,13 @@ export default function ProductForm(props: any) {
               </div>
             ))}
           {isImageLoading && (
-            <div className="max-h-24 p-3">
+            <div className="max-h-24 p-3 bg-white">
               <BounceLoader color="#233876" />
             </div>
           )}
 
           <div>
-            <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 text-center justify-center items-center text-gray-500 rounded-md bg-gray-200">
+            <label className="flex cursor-pointer text-sm gap-1 w-24 h-24 text-center justify-center items-center text-gray-500 rounded-md bg-gray-100">
               <img src={upload.src} alt="upload" width={22} height={22} />
               Upload{" "}
               <input
@@ -165,24 +174,30 @@ export default function ProductForm(props: any) {
 
         <div>
           <Label
-            className="text-slate-200"
+            className="text-black dark:text-white"
             htmlFor="productPrice"
             value="Preço"
           />
           <TextInput
             id="productPrice"
             type="number"
-            className="mt-2"
+            className="mt-2 bg-gray-100 rounded-md"
             {...register("price", {
               required: {
                 value: props.isInputRequired,
-                message: "Preço é obrigtório",
+                message: "Preço é obrigatório",
               },
             })}
           />
           <p className="text-red-500 text-sm">{errors.price?.message}</p>
         </div>
-        <button type="submit"> Submit </button>
+        <button
+          type="submit"
+          className="text-white max-w-xs
+           bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+        >
+          Adicionar
+        </button>
       </form>
     </>
   );

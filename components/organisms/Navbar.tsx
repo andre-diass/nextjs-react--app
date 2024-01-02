@@ -24,8 +24,8 @@ function NavOptions({ options }: NavOptionsProps) {
         <Link
           href={option.to}
           key={"key" + option.to}
-          className={`flex items-center gap-2 my-2 pr-2 rounded-sm ${
-            pathname === option.to ? "bg-white text-blue-800" : ""
+          className={`flex items-center gap-2 my-2 pr-2 rounded-md ${
+            pathname === option.to ? "bg-blue-200 text-black stroke-black" : ""
           }`}
         >
           <img
@@ -34,7 +34,8 @@ function NavOptions({ options }: NavOptionsProps) {
             width={22}
             height={16}
             style={{
-              fill: "#3498db",
+              filter: pathname === option.to ? "brightness(0) invert(0)" : "",
+              stroke: pathname === option.to ? "red" : "#808080",
             }}
           />
           {option.title}
@@ -44,9 +45,16 @@ function NavOptions({ options }: NavOptionsProps) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ show }: any) {
+  console.log(show);
+
   return (
-    <aside className="text-white py-4 pl-4  ">
+    <aside
+      className={
+        (show ? "left-0" : "-left-full") +
+        "  text-gray-500 p-4 fixed w-full bg-gray-200 h-full md:static md:w-auto transition-all"
+      }
+    >
       <nav className="flex flex-col">
         <NavOptions
           options={[
