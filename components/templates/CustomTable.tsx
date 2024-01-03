@@ -14,7 +14,7 @@ type Props = {
   }>;
   actionCols: Array<{ label: string; render: (item: any) => ReactNode }>;
   data: Record<string, any>[];
-  customDataRender: Record<string, (item: any) => ReactNode>;
+  customDataRender?: Record<string, (item: any) => ReactNode>;
 };
 
 export default function CustomTable({
@@ -44,12 +44,6 @@ export default function CustomTable({
 
   return (
     <>
-      <Link
-        className="bg-blue-800 rounded-lg p-2 text-white"
-        href={"/app/products/new"}
-      >
-        New product
-      </Link>
       <Table>
         {
           <table className="divide-y divide-neutral-200">

@@ -72,7 +72,7 @@ export default function ProductForm(props: any) {
       <form
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        className="flex m-10 mx-20 flex-col gap-4 bg-white p-6 rounded-md shadow-md"
+        className="flex my-5 mx-5 md:my-10 md:mx-20 z-10 flex-col gap-4 bg-white p-6 rounded-md shadow-md"
       >
         <h1 className="text-xl font-medium text-black dark:text-white">
           {props.heading}
@@ -193,7 +193,7 @@ export default function ProductForm(props: any) {
         </div>
         <button
           type="submit"
-          className="text-white max-w-xs
+          className="text-white max-w-xs self-center
            bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
         >
           Adicionar

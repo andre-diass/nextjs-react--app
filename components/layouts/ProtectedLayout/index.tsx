@@ -18,15 +18,15 @@ export default function ProtectedLayout({
 
   return (
     <>
-      <div>
+      <div className="block bg-gray-200 md:hidden">
         <button onClick={() => navState()}>tes</button>
-        <div className="bg-gray-200 min-h-screen flex">
-          <Navbar show={showNav} />
-          <div className="flex-grow overflow-x-auto ">
-            <main className="bg-neutral-100 my-2 mr-2 min-h-screen rounded-lg p-4">
-              {children}
-            </main>
-          </div>
+      </div>
+      <div className="bg-gray-200 min-h-screen flex">
+        <Navbar show={showNav} closeNav={() => navState()} />
+        <div className="flex-grow overflow-x-auto ">
+          <main className="bg-neutral-100 my-2 mr-2 min-h-screen rounded-lg p-4">
+            {children}
+          </main>
         </div>
       </div>
     </>

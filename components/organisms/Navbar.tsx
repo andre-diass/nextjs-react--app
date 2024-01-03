@@ -12,10 +12,11 @@ import { signOut } from "next-auth/react";
 import { useState } from "react";
 
 interface NavOptionsProps {
+  closeNav: any;
   options: { to: string; logoSrc: StaticImageData; title: string }[];
 }
 
-function NavOptions({ options }: NavOptionsProps) {
+function NavOptions({ options, closeNav }: NavOptionsProps) {
   const { pathname } = useRouter();
 
   return (
@@ -24,6 +25,7 @@ function NavOptions({ options }: NavOptionsProps) {
         <Link
           href={option.to}
           key={"key" + option.to}
+          onClick={closeNav}
           className={`flex items-center gap-2 my-2 pr-2 rounded-md ${
             pathname === option.to ? "bg-blue-200 text-black stroke-black" : ""
           }`}
@@ -45,20 +47,19 @@ function NavOptions({ options }: NavOptionsProps) {
   );
 }
 
-export default function Navbar({ show }: any) {
-  console.log(show);
-
+export default function Navbar({ show, closeNav }: any) {
   return (
     <aside
       className={
         (show ? "left-0" : "-left-full") +
-        "  text-gray-500 p-4 fixed w-full bg-gray-200 h-full md:static md:w-auto transition-all"
+        "  text-gray-500 p-4 fixed w-full bg-gray-200 h-full md:static md:w-auto transition-all z-10"
       }
     >
       <nav className="flex flex-col">
         <NavOptions
+          closeNav={closeNav}
           options={[
-            { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
+            // { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
             { to: "/app/products", logoSrc: products, title: "Products" },
             { to: "/orders", logoSrc: orders, title: "Orders" },
