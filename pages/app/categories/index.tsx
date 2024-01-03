@@ -63,7 +63,7 @@ export default function Categories({ userId, savedCategories }: any) {
           >
             Edit
           </button>
-          <button onClick={() => handleDeleteButton(item)} className="btn-red">
+          <button onClick={() => handleDeleteButton(item)} className="btn-redx">
             Delete
           </button>
         </>
@@ -81,8 +81,7 @@ export default function Categories({ userId, savedCategories }: any) {
       </label>
       <form onSubmit={saveCategory} className="flex gap-1">
         <TextInput
-          className="text-black min-w-fit"
-          type="text"
+          className="text-black block"
           placeholder="Category name"
           value={name}
           onChange={(e) => setName(e.target.value)}

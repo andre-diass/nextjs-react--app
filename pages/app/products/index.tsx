@@ -65,6 +65,12 @@ export default function Products({ products }: Props) {
 
   return (
     <>
+      <Link
+        className="bg-blue-800 rounded-lg p-2 text-white"
+        href={"/app/products/new"}
+      >
+        New product
+      </Link>
       <CustomTable
         cols={cols}
         actionCols={actionCols}
