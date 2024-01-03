@@ -45,10 +45,13 @@ export default function Categories({ userId, savedCategories }: any) {
   }
 
   async function handleDeleteButton(category: ICategory) {
-    await axios.delete("/api/categories/deleteCategory", {
-      params: { categoryId: category._id },
-    });
-    fetchCategories();
+    try {
+      await axios
+        .delete("/api/categories/deleteCategory", {
+          params: { categoryId: category._id },
+        })
+        .then(() => fetchCategories());
+    } catch (error) {}
   }
   const cols = [{ key: "name", label: "Name" }];
 
@@ -63,7 +66,7 @@ export default function Categories({ userId, savedCategories }: any) {
           >
             Edit
           </button>
-          <button onClick={() => handleDeleteButton(item)} className="btn-redx">
+          <button onClick={() => handleDeleteButton(item)} className="btn-red">
             Delete
           </button>
         </>
