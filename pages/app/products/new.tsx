@@ -11,7 +11,7 @@ export default function NewProduct({ userId, savedCategories }: any) {
     axios
       .post("/api/products/createProduct", body)
       .catch((x) => console.error(x))
-      .finally(() => router.push("/products"));
+      .finally(() => router.push("/app/products"));
   }
 
   const onSubmit = async (data: any) => {
