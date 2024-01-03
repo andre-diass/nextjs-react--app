@@ -13,7 +13,7 @@ export default function App() {
         </h2>
         <div>
           <img
-            src={session?.user?.image}
+            src={session?.user?.image ?? ""}
             alt=""
             className="w-20 h-20 rounded-md md:mt-3"
           />
