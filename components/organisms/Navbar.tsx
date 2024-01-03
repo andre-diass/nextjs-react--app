@@ -62,9 +62,9 @@ export default function Navbar({ show, closeNav }: any) {
             // { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
             { to: "/app/products", logoSrc: products, title: "Products" },
-            { to: "/orders", logoSrc: orders, title: "Orders" },
+            { to: "/app/orders", logoSrc: orders, title: "Orders" },
             { to: "/app/categories", logoSrc: categories, title: "Categories" },
-            { to: "/settings", logoSrc: settings, title: "Settings" },
+            { to: "/app/settings", logoSrc: settings, title: "Settings" },
           ]}
         />
       </nav>
