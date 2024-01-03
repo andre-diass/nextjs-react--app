@@ -95,6 +95,7 @@ export default function Categories({ userId, savedCategories }: any) {
         cols={cols}
         actionCols={actionCols}
         data={categories}
+        type="category"
       ></CustomTable>
     </>
   );

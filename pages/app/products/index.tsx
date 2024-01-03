@@ -76,6 +76,7 @@ export default function Products({ products }: Props) {
         actionCols={actionCols}
         data={products}
         customDataRender={customDataRender}
+        type="product"
       ></CustomTable>
     </>
   );

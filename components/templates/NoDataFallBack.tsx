@@ -1,9 +1,17 @@
+type Tables = "product" | "category";
+
+const NoDataFallBackMessages: Record<
+  Tables,
+  { title: string; subtitle: string }
+> = {
+  product: { title: "No product found", subtitle: "Create a new product" },
+  category: { title: "No category found", subtitle: "Create a new category" },
+};
+
 export default function NoDataFallback({
-  title,
-  subtitle,
+  type,
 }: {
-  title: string;
-  subtitle: string;
+  type: "product" | "category";
 }) {
   return (
     <div className="mt-6 flex h-96 items-center rounded-lg border text-center dark:border-gray-700">
@@ -24,8 +32,12 @@ export default function NoDataFallback({
             />
           </svg>
         </div>
-        <h1 className="mt-3 text-lg text-gray-800 dark:text-white">{title}</h1>
-        <p className="mt-2 text-gray-500 dark:text-gray-400">{subtitle}</p>
+        <h1 className="mt-3 text-lg text-gray-800 dark:text-white">
+          {NoDataFallBackMessages[type].title}
+        </h1>
+        <p className="mt-2 text-gray-500 dark:text-gray-400">
+          {NoDataFallBackMessages[type].subtitle}
+        </p>
       </div>
     </div>
   );

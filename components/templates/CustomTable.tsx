@@ -4,7 +4,7 @@ import IProduct from "@/types/products";
 import { Table } from "../organisms/Table";
 import { TBody } from "../organisms/TBody";
 import { TDCol } from "../organisms/TDCol";
-import NODataFallback from "./NoDataFallBack";
+import NoDataFallback from "./NoDataFallBack";
 import Link from "next/link";
 
 type Props = {
@@ -15,6 +15,7 @@ type Props = {
   actionCols: Array<{ label: string; render: (item: any) => ReactNode }>;
   data: Record<string, any>[];
   customDataRender?: Record<string, (item: any) => ReactNode>;
+  type: "product" | "category";
 };
 
 export default function CustomTable({
@@ -22,23 +23,14 @@ export default function CustomTable({
   actionCols,
   data,
   customDataRender,
+  type,
 }: PropsWithChildren<Props>) {
   console.log(data);
 
   if (data.length === 0)
     return (
       <>
-        {" "}
-        <Link
-          className="bg-blue-900 rounded-lg p-2 text-white"
-          href={"/app/products/new"}
-        >
-          New product
-        </Link>
-        <NODataFallback
-          title="No product found"
-          subtitle="You have to create a new product on the button above"
-        />
+        <NoDataFallback type={type} />
       </>
     );
 
