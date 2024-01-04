@@ -7,8 +7,15 @@ import IProduct from "@/types/products";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
 import { getProduct } from "@/services/products/getProduct";
+import ICategory from "@/types/categories";
 
-export default function Edit({ savedCategories, product, productId }: any) {
+interface Props {
+  categories: Array<ICategory>;
+  product: IProduct;
+  productId: string;
+}
+
+export default function Edit({ categories, product, productId }: Props) {
   const router = useRouter();
 
   const onSubmit = async (data: IProduct) => {
@@ -27,11 +34,9 @@ export default function Edit({ savedCategories, product, productId }: any) {
     <>
       <ProductForm
         onSubmit={onSubmit}
-        heading="Editar Produto"
-        isInputRequired={false}
-        isNewProduct={false}
-        categories={savedCategories}
-        {...product}
+        categories={categories}
+        product={product}
+        formType="EditProduct"
       />
     </>
   );
@@ -56,7 +61,7 @@ export const getServerSideProps = async function (
       userId,
       productId,
       product,
-      savedCategories: categories,
+      categories: categories,
       //data: data as any,
     },
   };

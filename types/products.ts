@@ -6,4 +6,6 @@ export default interface IProduct {
   userId: string;
   imageLinks: Array<string>;
   createdAt: Date;
+  productId: string;
+  category: string;
 }

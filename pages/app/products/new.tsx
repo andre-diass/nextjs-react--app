@@ -4,8 +4,15 @@ import ProductForm from "@/components/molecules/ProductForm";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
 import { useRouter } from "next/router";
+import ICategory from "@/types/categories";
 
-export default function NewProduct({ userId, savedCategories }: any) {
+export default function NewProduct({
+  userId,
+  categories,
+}: {
+  userId: string;
+  categories: Array<ICategory>;
+}) {
   const router = useRouter();
   async function createProduct(body: any) {
     axios
@@ -31,10 +38,8 @@ export default function NewProduct({ userId, savedCategories }: any) {
     <>
       <ProductForm
         onSubmit={onSubmit}
-        heading="Novo Produto"
-        isInputRequired={true}
-        isNewProduct={true}
-        categories={savedCategories}
+        categories={categories}
+        formType="CreateProduct"
       ></ProductForm>
     </>
   );
@@ -53,7 +58,7 @@ export const getServerSideProps = async function (
     props: {
       ...props,
       userId,
-      savedCategories: categories,
+      categories: categories,
       //data: data as any,
     },
   };

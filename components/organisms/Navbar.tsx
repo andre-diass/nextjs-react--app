@@ -52,7 +52,7 @@ export default function Navbar({ show, closeNav }: any) {
     <aside
       className={
         (show ? "left-0" : "-left-full") +
-        "  text-gray-500 p-4 fixed w-full bg-gray-200 h-full md:static md:w-auto transition-all z-10"
+        "  text-gray-500 px-5 md:py-4 fixed w-full bg-gray-200 h-screen md:static overflow-y-auto md:w-auto transition-all z-10"
       }
     >
       <nav className="flex flex-col">

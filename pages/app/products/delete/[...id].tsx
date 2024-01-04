@@ -27,7 +27,7 @@ export default function DeleteProduct({ productId, product }: Props) {
 
   return (
     <>
-      <h1 className="text-lg text-center mb-3">
+      <h1 className="text-lg text-center mb-3 text-black">
         Do you really want to delete {product.name} ?
       </h1>
       <div className="flex gap-2 justify-center">

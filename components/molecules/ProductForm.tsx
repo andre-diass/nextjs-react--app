@@ -3,24 +3,43 @@ import { useForm } from "react-hook-form";
 import { Label, TextInput } from "flowbite-react";
 import upload from "@/public/upload.svg";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BounceLoader } from "react-spinners";
-import { getCategories } from "@/services/categories/getCategories";
-
-interface IForm {
-  name: string;
-  description: string;
-  price: number;
-  category: string;
+import IProduct from "@/types/products";
+import ICategory from "@/types/categories";
+interface Props {
+  onSubmit: (data: any) => Promise<void>;
+  categories: Array<ICategory>;
+  product?: IProduct;
+  formType: "EditProduct" | "CreateProduct";
 }
 
-export default function ProductForm(props: any) {
-  const form = useForm<IForm>();
+export const FormProperties = {
+  EditProduct: {
+    heading: "Editar Produto",
+    isInputRequired: true,
+    buttonLabel: "Editar",
+  },
+  CreateProduct: {
+    heading: "Novo Produto",
+    isInputRequired: true,
+    buttonLabel: "Adicionar",
+  },
+};
+
+export default function ProductForm({
+  onSubmit,
+  categories,
+  product,
+  formType,
+}: Props) {
+  const form = useForm<IProduct>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
-  const [images, setImages] = useState(props.imageLinks || []);
+  const [images, setImages] = useState(product?.imageLinks || []);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const uploadImages = async (event: any) => {
     setIsImageLoading(true);
@@ -33,7 +52,7 @@ export default function ProductForm(props: any) {
 
       await axios
         .post("/api/products/uploadImages", data, {
-          params: { productId: props.productId },
+          params: { productId: product?.productId },
         })
         .then((res) => {
           setImages((oldImages: any) => {
@@ -63,19 +82,20 @@ export default function ProductForm(props: any) {
     }
   };
 
-  const onSubmit = async (data: IForm) => {
-    props.onSubmit({ ...data, imageLinks: images });
+  const onSubmitt = async (data: any) => {
+    onSubmit({ ...data, imageLinks: images });
+    setIsLoading(true);
   };
 
   return (
     <>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmitt)}
         noValidate
         className="flex my-5 mx-5 md:my-10 md:mx-20 z-10 flex-col gap-4 bg-white p-6 rounded-md shadow-md"
       >
         <h1 className="text-xl font-medium text-black dark:text-white">
-          {props.heading}
+          {FormProperties[formType].heading}
         </h1>
         <div>
           <Label
@@ -89,7 +109,7 @@ export default function ProductForm(props: any) {
             className="mt-2 bg-gray-100 rounded-md"
             {...register("name", {
               required: {
-                value: props.isInputRequired,
+                value: FormProperties[formType].isInputRequired,
                 message: "Nome do produto é obrigatório",
               },
             })}
@@ -107,8 +127,8 @@ export default function ProductForm(props: any) {
             {...register("category")}
           >
             <option value="">uncategorized</option>
-            {props.categories.length > 0 &&
-              props.categories.map((e: any) => (
+            {categories.length > 0 &&
+              categories.map((e: any) => (
                 <option key={e._id} value={e._name}>
                   {e.name}
                 </option>
@@ -184,7 +204,7 @@ export default function ProductForm(props: any) {
             className="mt-2 bg-gray-100 rounded-md"
             {...register("price", {
               required: {
-                value: props.isInputRequired,
+                value: FormProperties[formType].isInputRequired,
                 message: "Preço é obrigatório",
               },
             })}
@@ -196,7 +216,7 @@ export default function ProductForm(props: any) {
           className="text-white max-w-xs self-center
            bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
         >
-          Adicionar
+          {!isLoading ? "Adicionar" : "Adicionando"}
         </button>
       </form>
     </>
