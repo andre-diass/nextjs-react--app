@@ -16,10 +16,11 @@ export default function DeleteProduct({ productId, product }: Props) {
 
   const deleteProduct = async () => {
     try {
-      axios.delete("/api/products/deleteProduct", {
-        params: { productId: productId },
-      });
-      router.push("/app/products");
+      axios
+        .delete("/api/products/deleteProduct", {
+          params: { productId: productId },
+        })
+        .finally(() => router.push("/app/products"));
     } catch (error) {
       console.error(error);
     }
