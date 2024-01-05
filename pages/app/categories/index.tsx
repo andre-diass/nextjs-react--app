@@ -14,25 +14,38 @@ export default function Categories({ userId, savedCategories }: any) {
   const [name, setName] = useState<string>("");
   const [categories, setCategories] = useState<ICategory[]>(savedCategories);
   const [editedCategory, setEditedCategory] = useState<ICategory | null>(null);
+
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   async function fetchCategories() {
-    const response = await getCategories(userId);
-    setCategories(response);
+    try {
+      const response = await axios.get("/api/categories/getCategories", {
+        params: { userId: userId },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
   }
 
   async function saveCategory(event: any) {
     event?.preventDefault();
+    setIsSaving(true);
 
     if (editedCategory) {
-      await axios.put("/api/categories/updateCategory", {
-        name: name,
-        categoryId: editedCategory?._id,
-      });
+      await axios
+        .put("/api/categories/updateCategory", {
+          name: name,
+          categoryId: editedCategory?._id,
+        })
+        .then(() => setIsSaving(false));
       setEditedCategory(null);
     } else {
-      await axios.post("/api/categories/addCategory", {
-        name: name,
-        userId: userId,
-      });
+      await axios
+        .post("/api/categories/addCategory", {
+          name: name,
+          userId: userId,
+        })
+        .then(() => setIsSaving(false));
       fetchCategories();
     }
 
@@ -90,7 +103,7 @@ export default function Categories({ userId, savedCategories }: any) {
           onChange={(e) => setName(e.target.value)}
         />
         <button type="submit" className="btn-default">
-          Save
+          {!isSaving ? "Save" : "Saving"}
         </button>
       </form>
 
@@ -113,14 +126,12 @@ export const getServerSideProps = async function (
   const userId = props?.userId;
 
   const categories = await getCategories(userId);
-  console.log(categories);
 
   return {
     props: {
       ...props,
       userId: userId,
       savedCategories: categories,
-      //data: data as any,
     },
   };
 };
