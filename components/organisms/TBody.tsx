@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
 const styles = {
-  tbody: "bg-white divide-y divide-neutral-200",
+  tbody: "bg-fourth divide-y divide-neutral-200",
 };
 
 export const TBody = ({ children }: PropsWithChildren) => (

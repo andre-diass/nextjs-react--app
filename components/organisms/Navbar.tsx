@@ -26,8 +26,8 @@ function NavOptions({ options, closeNav }: NavOptionsProps) {
           href={option.to}
           key={"key" + option.to}
           onClick={closeNav}
-          className={`flex items-center gap-2 my-2 pr-2 rounded-md ${
-            pathname === option.to ? "bg-blue-200 text-black stroke-black" : ""
+          className={`flex items-center gap-2 my-2 pr-2 rounded-md text-gray-400 ${
+            pathname === option.to ? "bg-detail text-neutral-900 " : ""
           }`}
         >
           <img
@@ -36,8 +36,7 @@ function NavOptions({ options, closeNav }: NavOptionsProps) {
             width={22}
             height={16}
             style={{
-              filter: pathname === option.to ? "brightness(0) invert(0)" : "",
-              stroke: pathname === option.to ? "red" : "#808080",
+              filter: pathname === option.to ? "brightness(1) invert(0)" : "",
             }}
           />
           {option.title}
@@ -52,7 +51,7 @@ export default function Navbar({ show, closeNav }: any) {
     <aside
       className={
         (show ? "left-0" : "-left-full") +
-        "  text-gray-500 px-5 md:py-4 fixed w-full bg-gray-200 h-screen md:static overflow-y-auto md:w-auto transition-all z-10"
+        "  text-gray-500 px-5 md:py-4 fixed w-full bg-primary h-screen md:static overflow-y-auto md:w-auto transition-all z-10"
       }
     >
       <nav className="flex flex-col">

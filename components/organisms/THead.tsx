@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 const styles = {
-  thead: "bg-neutral-50",
+  thead: "bg-third",
   thCol:
     "py-3.5 px-4 text-sm w-max font-bold text-left rtl:text-right text-neutral-700",
 };

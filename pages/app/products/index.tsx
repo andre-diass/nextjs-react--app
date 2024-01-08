@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
@@ -7,12 +6,15 @@ import { GetServerSidePropsContext } from "next";
 import { getProducts } from "@/services/products/getProducts";
 import CustomTable from "@/components/templates/CustomTable";
 import IProduct from "@/types/products";
+import Button from "@/components/atoms/Button";
+import { useRouter } from "next/router";
 
 interface Props {
   products: Array<IProduct>;
 }
 
 export default function Products({ products }: Props) {
+  const router = useRouter();
   const cols = [
     { key: "name", label: "Name" },
     { key: "price", label: "Price" },
@@ -26,33 +28,22 @@ export default function Products({ products }: Props) {
       render: (item: IProduct) => (
         <>
           <div className="flex gap-1">
-            <Link
-              className="flex bg-blue-800 p-2 text-white rounded-md"
-              href={"products/edit/" + item._id}
+            <Button
+              size="sm"
+              variant="highlight"
+              imgSrc={edit.src}
+              onClick={() => router.push("products/edit/" + item._id)}
             >
-              <img
-                className="hidden md:block"
-                src={edit.src}
-                alt="Icon"
-                width={22}
-                height={16}
-              />
-              <p> Edit </p>
-            </Link>
-
-            <Link
-              className="flex bg-red-600 p-2 text-white rounded-md"
-              href={"products/delete/" + item._id}
+              Edit
+            </Button>
+            <Button
+              size="sm"
+              variant="primary"
+              imgSrc={trash.src}
+              onClick={() => router.push("products/delete/" + item._id)}
             >
-              <img
-                className="hidden md:block"
-                src={trash.src}
-                alt="Icon"
-                width={22}
-                height={16}
-              />
-              <p> Delete</p>
-            </Link>
+              Delete
+            </Button>
           </div>
         </>
       ),
@@ -65,12 +56,13 @@ export default function Products({ products }: Props) {
 
   return (
     <>
-      <Link
-        className="bg-blue-800 rounded-lg p-2 text-white"
-        href={"/app/products/new"}
+      <Button
+        size="bs"
+        variant="highlight"
+        onClick={() => router.push("/app/products/new")}
       >
         New product
-      </Link>
+      </Button>
       <CustomTable
         cols={cols}
         actionCols={actionCols}
