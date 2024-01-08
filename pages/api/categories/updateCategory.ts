@@ -1,14 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getProducts } from "@/services/products/getProducts";
+import api from "@/services";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const userID = req.query.userId as string;
+  const categoryID = req.body.categoryId;
   try {
-    const response = await getProducts(userID);
-    return res.json(response);
+    const response = await api.put("/updateCategory/" + categoryID, req.body);
+    console.log("Response:", response.data);
+    return res.json(response.data);
   } catch (error) {
     console.error("Error in API handler:", error);
   }

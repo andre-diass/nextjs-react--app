@@ -1,21 +1,26 @@
+/* eslint-disable @next/next/no-img-element */
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export default function App() {
+  const { data: session } = useSession();
   return (
     <>
-      <p> teste . isso dever ir dentro do componente main </p>
+      <div className="text-blue-900 justify-between flex flex-row md:flex-col">
+        <h2>
+          Hello, <b>{session?.user?.name}</b>
+        </h2>
+        <div>
+          <img
+            src={session?.user?.image ?? ""}
+            alt=""
+            className="w-20 h-20 rounded-md md:mt-3"
+          />
+        </div>
+      </div>
     </>
   );
 }
 
 export const getServerSideProps = protectedRouteMiddleware;
-
-/*
-export async function getServerSideProps(context: any) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-
-  if (!session) return { redirect: { destination: "/" } };
-
-  return { props: {} };
-}
-*/

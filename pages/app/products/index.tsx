@@ -1,71 +1,103 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import edit from "@/public/edit.svg";
 import trash from "@/public/trash.svg";
+import { GetServerSidePropsContext } from "next";
+import { getProducts } from "@/services/products/getProducts";
+import CustomTable from "@/components/templates/CustomTable";
+import IProduct from "@/types/products";
 
-interface Product {
-  description: string;
-  name: string;
-  price: string;
-  userId: string;
-  __v: number;
-  _id: string;
+interface Props {
+  products: Array<IProduct>;
 }
 
-export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
+export default function Products({ products }: Props) {
+  const cols = [
+    { key: "name", label: "Name" },
+    { key: "price", label: "Price" },
+    { key: "_id", label: "ID" },
+    // { key: "createdAt", label: "Created At" },
+  ];
 
-  async function makeGetRequest() {
-    const userID = await axios.get("/api/accountID");
+  const actionCols = [
+    {
+      label: "",
+      render: (item: IProduct) => (
+        <>
+          <div className="flex gap-1">
+            <Link
+              className="flex bg-blue-800 p-2 text-white rounded-md"
+              href={"products/edit/" + item._id}
+            >
+              <img
+                className="hidden md:block"
+                src={edit.src}
+                alt="Icon"
+                width={22}
+                height={16}
+              />
+              <p> Edit </p>
+            </Link>
 
-    const response = await axios.get("/api/products/getProducts", {
-      params: { userId: userID.data },
-    });
+            <Link
+              className="flex bg-red-600 p-2 text-white rounded-md"
+              href={"products/delete/" + item._id}
+            >
+              <img
+                className="hidden md:block"
+                src={trash.src}
+                alt="Icon"
+                width={22}
+                height={16}
+              />
+              <p> Delete</p>
+            </Link>
+          </div>
+        </>
+      ),
+    },
+  ];
 
-    setProducts(response.data);
-  }
-  useEffect(() => {
-    makeGetRequest();
-  }, []);
+  const customDataRender = {
+    createdAt: (item: IProduct) => new Date(item.createdAt).toLocaleString(),
+  };
 
   return (
     <>
       <Link
-        className="bg-slate-100 rounded-lg p-2 text-zinc-900"
+        className="bg-blue-800 rounded-lg p-2 text-white"
         href={"/app/products/new"}
       >
         New product
       </Link>
-
-      <table className="basic">
-        <thead>
-          <tr>
-            <th>Nome</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>
-                <Link href={"products/edit/" + product._id}>
-                  <img src={edit.src} alt="Icon" width={22} height={16} />
-                  Edit{" "}
-                </Link>
-                <Link href={"products/delete/" + product._id}>
-                  <img src={trash.src} alt="Icon" width={22} height={16} />
-                  Delete
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <CustomTable
+        cols={cols}
+        actionCols={actionCols}
+        data={products}
+        customDataRender={customDataRender}
+        type="product"
+      ></CustomTable>
     </>
   );
 }
 
-export const getServerSideProps = protectedRouteMiddleware;
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+
+  const userId = props?.userId;
+
+  const products = await getProducts(userId);
+  console.log(products);
+
+  return {
+    props: {
+      ...props,
+      userId: userId,
+      products: products,
+    },
+  };
+};

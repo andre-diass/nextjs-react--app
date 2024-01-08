@@ -1,34 +1,31 @@
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
+import { GetServerSidePropsContext } from "next";
+import { getCategories } from "@/services/categories/getCategories";
 import { useRouter } from "next/router";
+import ICategory from "@/types/categories";
 
-export default function NewProduct() {
+export default function NewProduct({
+  userId,
+  categories,
+}: {
+  userId: string;
+  categories: Array<ICategory>;
+}) {
   const router = useRouter();
-  let imageLinks: Array<string>;
   async function createProduct(body: any) {
     axios
       .post("/api/products/createProduct", body)
-      .catch((x) => console.error(x));
-  }
-
-  async function getUserId() {
-    return axios
-      .get("/api/accountID")
-      .then((response) => response.data)
-      .catch((error) => {
-        console.error(error);
-      })
+      .catch((x) => console.error(x))
       .finally(() => router.push("/app/products"));
   }
 
   const onSubmit = async (data: any) => {
     try {
-      const userID = await getUserId();
       const bodyWithAccountID = {
         ...data,
-        userId: userID,
-        imageLinks: imageLinks,
+        userId: userId,
       };
 
       createProduct(bodyWithAccountID);
@@ -37,21 +34,32 @@ export default function NewProduct() {
     }
   };
 
-  const handleImageData = (data: Array<string>) => {
-    imageLinks = data;
-  };
-
   return (
     <>
       <ProductForm
         onSubmit={onSubmit}
-        heading="Novo Produto"
-        isInputRequired={true}
-        isNewProduct={true}
-        sentImageData={handleImageData}
+        categories={categories}
+        formType="CreateProduct"
       ></ProductForm>
     </>
   );
 }
 
-export const getServerSideProps = protectedRouteMiddleware;
+export const getServerSideProps = async function (
+  context: GetServerSidePropsContext
+) {
+  const { notFound, props } = await protectedRouteMiddleware(context);
+  if (notFound) return { notFound };
+
+  const userId = props?.userId;
+  const categories = await getCategories(userId);
+
+  return {
+    props: {
+      ...props,
+      userId,
+      categories: categories,
+      //data: data as any,
+    },
+  };
+};
