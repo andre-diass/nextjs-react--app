@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BounceLoader } from "react-spinners";
 import IProduct from "@/types/products";
 import ICategory from "@/types/categories";
+import Button from "../atoms/Button";
 interface Props {
   onSubmit: (data: any) => Promise<void>;
   categories: Array<ICategory>;
@@ -211,13 +212,14 @@ export default function ProductForm({
           />
           <p className="text-red-500 text-sm">{errors.price?.message}</p>
         </div>
-        <button
+        <Button
+          size="bs"
+          variant="highlight"
           type="submit"
-          className="text-white max-w-xs self-center
-           bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+          className="self-center"
         >
           {!isLoading ? "Adicionar" : "Adicionando"}
-        </button>
+        </Button>
       </form>
     </>
   );

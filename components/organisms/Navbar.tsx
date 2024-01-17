@@ -26,7 +26,7 @@ function NavOptions({ options, closeNav }: NavOptionsProps) {
           href={option.to}
           key={"key" + option.to}
           onClick={closeNav}
-          className={`flex items-center gap-2 my-2 pr-2 rounded-md text-gray-400 ${
+          className={`flex items-center gap-2 my-2 pr-2 rounded-md text-gray-300 ${
             pathname === option.to ? "bg-detail text-neutral-900 " : ""
           }`}
         >
@@ -36,7 +36,7 @@ function NavOptions({ options, closeNav }: NavOptionsProps) {
             width={22}
             height={16}
             style={{
-              filter: pathname === option.to ? "brightness(1) invert(0)" : "",
+              filter: pathname === option.to ? "brightness(1) invert(1)" : "",
             }}
           />
           {option.title}
@@ -71,7 +71,7 @@ export default function Navbar({ show, closeNav }: any) {
         onClick={async () => {
           await signOut({ redirect: true, callbackUrl: "/" });
         }}
-        className=" flex bg-white text-slate-800 rounded-lg p-2 dark:text-slate-950"
+        className=" flex bg-white text-slate-800 rounded-lg p-1 mt-1 mr-4 dark:text-slate-950"
       >
         Sign out
       </button>

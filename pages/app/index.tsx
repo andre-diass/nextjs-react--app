@@ -7,7 +7,7 @@ export default function App() {
   const { data: session } = useSession();
   return (
     <>
-      <div className="text-blue-900 justify-between flex flex-row md:flex-col">
+      <div className="text-gray-800 justify-between flex flex-row md:flex-col">
         <h2>
           Hello, <b>{session?.user?.name}</b>
         </h2>

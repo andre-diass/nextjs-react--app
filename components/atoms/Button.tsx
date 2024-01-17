@@ -26,9 +26,9 @@ type Variant =
 
 const varianteMap: Record<Variant, string> = {
   highlight:
-    "text-white bg-buttonHighlight hover:bg-primary-800 focus:ring-4 focus:ring-highlight focus:outline-none ",
+    "text-white bg-buttonHighlight hover:bg-green-800 focus:ring-4 focus:ring-highlight focus:outline-none ",
   primary:
-    "text-black bg-buttonPrimary hover:bg-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none ",
+    "text-black bg-buttonPrimary hover:bg-gray-400 focus:ring-4 focus:ring-green-300 focus:outline-none ",
   alternative:
     "text-white focus:outline-none bg-secondary rounded-lg border border-neutral-200 hover:bg-neutral-100 hover:text-neutral-800 focus:z-10 focus:ring-4 focus:ring-neutral-200",
   alternative2:

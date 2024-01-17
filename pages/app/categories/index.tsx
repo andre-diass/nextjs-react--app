@@ -5,6 +5,7 @@ import axios from "axios";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
 import CustomTable from "@/components/templates/CustomTable";
+import Button from "@/components/atoms/Button";
 
 export default function Categories({ userId, savedCategories }: any) {
   interface ICategory {
@@ -73,15 +74,22 @@ export default function Categories({ userId, savedCategories }: any) {
       label: "",
       render: (item: ICategory) => (
         <>
-          <button
-            onClick={() => handleEditButton(item)}
-            className="btn-default mr-1"
-          >
-            Edit
-          </button>
-          <button onClick={() => handleDeleteButton(item)} className="btn-red">
-            Delete
-          </button>
+          <div className="flex flex-row gap-1">
+            <Button
+              size="sm"
+              variant="highlight"
+              onClick={() => handleEditButton(item)}
+            >
+              Edit
+            </Button>
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => handleDeleteButton(item)}
+            >
+              Delete
+            </Button>
+          </div>
         </>
       ),
     },
@@ -102,9 +110,14 @@ export default function Categories({ userId, savedCategories }: any) {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button type="submit" className="btn-default">
+        <Button
+          size="bs"
+          variant="highlight"
+          type="submit"
+          className="btn-default"
+        >
           {!isSaving ? "Save" : "Saving"}
-        </button>
+        </Button>
       </form>
 
       <CustomTable

@@ -52,6 +52,7 @@ export default function Products({ products }: Props) {
 
   const customDataRender = {
     createdAt: (item: IProduct) => new Date(item.createdAt).toLocaleString(),
+    price: (item: IProduct) => <p> ${item.price}</p>,
   };
 
   return (

@@ -16,13 +16,13 @@ export default function NoDataFallback({
   return (
     <div className="mt-6 flex h-96 items-center rounded-lg border text-center dark:border-gray-700">
       <div className="mx-auto flex w-full max-w-sm flex-col px-4">
-        <div className="mx-auto rounded-full bg-blue-100 p-3 text-blue-500 dark:bg-gray-800">
+        <div className="mx-auto rounded-full bg-buttonHighlight p-3 text-blue-500 dark:bg-gray-800">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
-            stroke="currentColor"
+            stroke="white"
             className="h-6 w-6"
           >
             <path
