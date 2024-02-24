@@ -1,6 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h3 align="center">Next.js, React E-commerce app</h3>
 
-## Getting Started
+---
+
+<p align="center"> 
+Este projeto tem como objetivo o desenvolvimento de uma aplicação de E-commerce. O backend deste projeto está disponível no seguinte repositório:
+https://github.com/andre-diass/serverless-ts-microservice
+</p>
+
+## 📝 Conteúdo <a name = "content"></a>
+- [Sobre](#about)
+- [Instalação](#getting_started)
+- [Estrutura do Projeto](#project_structure)
+- [Layout](#layout)
+- [Arquitetura do Back-end](#system_architecture)
+- [Contexto da solução](#solution_context)
+- [Requisitos Funcionais](#functionalities)
+- [Diagrama de Caso de Uso](#use_case_diagram)
+- [Deploy](#deployment)
+- [Desenvolvido com](#built_using)
+- [Autores](#authors)
+
+
+## 📕 Sobre <a name = "about"></a>
+Esta documentação está orientada tanto para informações, que descrevem as funcionalidades do projeto, quanto para compreensão, 
+com o intuito de explicar as ferramentas e modelos utilizados em forma de explicação discursiva e visual. Esta documentação não abrange guias práticos ou tutoriais
+
+## Instalação <a name = "getting_started"></a>
 
 First, run the development server:
 
@@ -12,27 +37,65 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estrutura do projeto <a name = "project_structure"></a>
+A estrutura deste projeto está descrita abaixo:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+| Nome                  | Descrição                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------- |
+| **components**        | Componentes React reutilizavéis. Estrutura interna segue padrão de Atomic Design                |
+| **lib**               | Código fonte para configuração de bibliotecas externas                                          |
+| **middlewares**       | Código fonte para proteção das rotas na aplicação                                               |
+| **node_modules**      | Contém todas as dependências npm.                                                               |
+| **pages**             | Rotas públicas da aplicação                                                                     |
+| **pages/api**         | Server side enpoints                                                                            |
+| **pages/app**         | Rotas privas da aplicação. (pós login)                                                          |
+| **public**            | Arquivos estáticos                                                                              |
+| **services**          | Funções de chamadas ao back-end                                                                 |
+| **styles**            | Código referente a configuração global de CSS                                                   |
+| **types**             | Tipos utilizados globalmente na aplicação                                                       |
+| **utils**             | Funções e classes utilitárias usadas em toda a aplicação                                        |
+| package.json          | Contém dependências npm, bem como [scripts de build](#o-que-fazer-se-uma-biblioteca-nao-estiver-no-definitelytyped). |
+| tsconfig.json         | Configurações para compilar apenas código-fonte escrito em TypeScript.                          |
+| tslint.json           | Configurações para a verificação de estilo de código com o TSLint.                              |
+| tailwind.config.js    | Configurações para a verificação de estilo de código com o TSLint.                              |
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🎨 Layout <a name = "layout"></a>
+O layout dessa aplicação(front-end), está disponível em: <a href="https://www.figma.com/file/hrq37duWZOq54gsReKoIfN/Store-admin?type=design&node-id=0%3A1&mode=design&t=m98hujQXfZUr1MsG-1">Figma</a>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 💻 Topologia do back-end <a name = "system_architecture"></a>
+![Alt text](https://upload-png-4567.s3.us-west-1.amazonaws.com/Cloud+Formation+(8).jpg)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contexto da solução <a name = "solution_context"></a>
+O ecossistema Amazônia tem uma venda anual de $404,4 bilhões. Englobando setor da agricultura e florestas. A aplicação em questão tem como objetivo integrar produtos desse ecossistema ao mercado exterior, através de uma plataforma de marketplace simples, direta e confiavél.
 
-## Learn More
+## Requisitos Funcionais <a name = "functionalities"></a>
 
-To learn more about Next.js, take a look at the following resources:
+- [x] CRUD de produtos;
+- [x] CRUD de categorias;
+- [ ] Gestão de pedidos;
+- [x] Autenticação de usuários;
+- [x] Autorização baseada em papéis;
+- [x] Geração de token de acesso (JWT);
+- [ ] Integração com serviços de pagamento;
+- [ ] Monitoramento e logs;
+- [x] Integração com provedores de armazenamento em nuvem;
+- [ ] Implementação de testes automatizados;
+- [ ] Documentação abrangente.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✏️ Diagrama de caso de uso <a name = "use_case_diagram"></a>
+<img src="https://upload-png-4567.s3.us-west-1.amazonaws.com/Use+case+diagram+(1).jpg" alt="Alt text">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🚀 Deploy <a name = "deployment"></a>
+O deploy é realizado através do push para um dos branches development ou main.
 
-## Deploy on Vercel
+## ⚒️ Desenvolvido com <a name = "built_using"></a>
+- [React](https://reactjs.org/) - Biblioteca JavaScript para construção de interfaces de usuário
+- [Next.js](https://nextjs.org/) - Framework React para renderização do lado do servidor e criação de aplicativos da web
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário de baixo nível
+- [axios](https://github.com/axios/axios) - Cliente HTTP baseado em Promise para o navegador e o Node.js
+- [Jest](https://jestjs.io/) - Framework de teste de JavaScript
+- [Flowbite](https://flowbite.com/) - Conjunto de ferramentas de design e componentes para construir interfaces da web rapidamente
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## ✍️ Autores <a name = "authors"></a>
+- [@andredias](https://github.com/andre-diass) - Idea & Development
