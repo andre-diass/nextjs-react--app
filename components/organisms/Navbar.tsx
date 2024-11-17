@@ -7,6 +7,8 @@ import products from "@/public/products.svg";
 import orders from "@/public/orders.svg";
 import categories from "@/public/categories.svg";
 import settings from "@/public/settings.svg";
+import location from "@/public/location.svg";
+import device from "@/public/device.svg";
 import { StaticImageData } from "next/image";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
@@ -61,10 +63,10 @@ export default function Navbar({ show, closeNav }: any) {
           options={[
             // { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
-            { to: "/app/products", logoSrc: products, title: "Products" },
-            { to: "/app/orders", logoSrc: orders, title: "Orders" },
-            { to: "/app/categories", logoSrc: categories, title: "Categories" },
-            { to: "/app/settings", logoSrc: settings, title: "Settings" },
+            { to: "/app/products", logoSrc: device, title: "Dispositivos" },
+            { to: "/app/orders", logoSrc: location, title: "Rastreios" },
+            // { to: "/app/categories", logoSrc: categories, title: "Categories" },
+            { to: "/app/settings", logoSrc: settings, title: "Configurações" },
           ]}
         />
       </nav>
@@ -74,7 +76,7 @@ export default function Navbar({ show, closeNav }: any) {
         }}
         className=" flex bg-white text-slate-800 rounded-lg p-2 dark:text-slate-950"
       >
-        Sign out
+        Log out
       </button>
     </aside>
   );

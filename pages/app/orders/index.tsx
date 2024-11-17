@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
 import { GetServerSidePropsContext } from "next";
-import tool from "@/public/tool.svg";
+import dynamic from "next/dynamic";
+
+const DynamicMap = dynamic(() => import("../orders/map"), {
+  ssr: false,
+});
 
 export default function Settings() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <img src={tool.src} alt="" width={35} height={35} />
-
-      <p className="text-black text-lg">Page under development</p>
+    <div className="flex items-center justify-center h-screen pb-8 pt-6 px-5">
+      <DynamicMap></DynamicMap>
     </div>
   );
 }
