@@ -17,8 +17,23 @@ const Marker = dynamic(
   { ssr: false }
 );
 
-const MapTeste = () => {
+interface Geolocation {
+  latitude: number;
+  longitude: number;
+}
+
+interface Props {
+  locations: {
+    id: string;
+    geolocations: Geolocation[];
+    IMEI: number;
+    reference_date: string;
+  };
+}
+
+const MapTeste = ({ locations }: Props) => {
   const [icon, setIcon] = useState<any>(null);
+  console.log(locations);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,7 +55,7 @@ const MapTeste = () => {
     <div className="relative h-full w-full">
       <MapContainer
         zoom={15}
-        center={[-8.198687, -34.917878]}
+        center={[-8.198687, -34.917878]} // Default center
         scrollWheelZoom={true}
         style={{ height: "100%", width: "100%", zIndex: 0 }}
         zoomDelta={1}
@@ -50,7 +65,14 @@ const MapTeste = () => {
         attributionControl={false}
       >
         <TileLayer url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} />
-        {icon && <Marker position={[-8.198687, -34.917878]} icon={icon} />}
+        {icon &&
+          locations.geolocations.map((location, index) => (
+            <Marker
+              key={index}
+              position={[location.latitude, location.longitude]}
+              icon={icon}
+            />
+          ))}
       </MapContainer>
     </div>
   );

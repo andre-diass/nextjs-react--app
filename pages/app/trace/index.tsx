@@ -1,16 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware";
+import { getLocation } from "@/services/location/getLocation";
 import { GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 
-const DynamicMap = dynamic(() => import("../orders/map"), {
+const DynamicMap = dynamic(() => import("./map"), {
   ssr: false,
 });
 
-export default function Settings() {
+interface Props {
+  locations: any;
+}
+
+export default function Settings({ locations }: Props) {
   return (
     <div className="flex items-center justify-center h-screen pb-8 pt-6 px-5">
-      <DynamicMap></DynamicMap>
+      <DynamicMap locations={locations}></DynamicMap>
     </div>
   );
 }
@@ -21,9 +26,12 @@ export const getServerSideProps = async function (
   const { notFound, props } = await protectedRouteMiddleware(context);
   if (notFound) return { notFound };
 
+  const locations = await getLocation();
+
   return {
     props: {
       ...props,
+      locations: locations,
     },
   };
 };

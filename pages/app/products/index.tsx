@@ -15,7 +15,7 @@ interface Props {
 export default function Products({ products }: Props) {
   const cols = [
     { key: "name", label: "Name" },
-    { key: "price", label: "Price" },
+    // { key: "price", label: "Price" },
     { key: "_id", label: "ID" },
     // { key: "createdAt", label: "Created At" },
   ];
@@ -69,7 +69,7 @@ export default function Products({ products }: Props) {
         className="bg-blue-800 rounded-lg p-2 text-white"
         href={"/app/products/new"}
       >
-        New product
+        Novo rastreador
       </Link>
       <CustomTable
         cols={cols}

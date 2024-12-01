@@ -64,7 +64,7 @@ export default function Navbar({ show, closeNav }: any) {
             // { to: "/store", logoSrc: store, title: "Ecommerce Admin" },
             { to: "/app", logoSrc: dashboard, title: "Dashboard" },
             { to: "/app/products", logoSrc: device, title: "Dispositivos" },
-            { to: "/app/orders", logoSrc: location, title: "Rastreios" },
+            { to: "/app/trace", logoSrc: location, title: "Rastreios" },
             // { to: "/app/categories", logoSrc: categories, title: "Categories" },
             { to: "/app/settings", logoSrc: settings, title: "Configurações" },
           ]}
