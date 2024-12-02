@@ -3,7 +3,7 @@ import { protectedRouteMiddleware } from "@/middlewares/protectedRouteMiddleware
 import { useRouter } from "next/router";
 import axios from "axios";
 import ProductForm from "@/components/molecules/ProductForm";
-import IProduct from "@/types/products";
+import IProduct, { Device } from "@/types/products";
 import { GetServerSidePropsContext } from "next";
 import { getCategories } from "@/services/categories/getCategories";
 import { getProduct } from "@/services/products/getProduct";
@@ -11,7 +11,7 @@ import ICategory from "@/types/categories";
 
 interface Props {
   categories: Array<ICategory>;
-  product: IProduct;
+  product: Device;
   productId: string;
 }
 
