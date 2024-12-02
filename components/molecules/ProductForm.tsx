@@ -5,12 +5,12 @@ import upload from "@/public/upload.svg";
 import axios from "axios";
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
-import IProduct from "@/types/products";
+import IProduct, { Device } from "@/types/products";
 import ICategory from "@/types/categories";
 interface Props {
   onSubmit: (data: any) => Promise<void>;
   categories: Array<ICategory>;
-  product?: IProduct;
+  product?: Device;
   formType: "EditProduct" | "CreateProduct";
 }
 
@@ -21,7 +21,7 @@ export const FormProperties = {
     buttonLabel: "Editar",
   },
   CreateProduct: {
-    heading: "Novo Produto",
+    heading: "Novo Rastreador",
     isInputRequired: true,
     buttonLabel: "Adicionar",
   },
@@ -33,57 +33,57 @@ export default function ProductForm({
   product,
   formType,
 }: Props) {
-  const form = useForm<IProduct>();
+  const form = useForm<Device>();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
-  const [images, setImages] = useState(product?.imageLinks || []);
+  // const [images, setImages] = useState(product?.imageLinks || []);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const uploadImages = async (event: any) => {
-    setIsImageLoading(true);
-    const files = event.target?.files;
-    if (files.length > 0) {
-      const data = new FormData();
-      for (const file of files) {
-        data.append("file", file);
-      }
-
-      await axios
-        .post("/api/products/uploadImages", data, {
-          params: { productId: product?.productId },
-        })
-        .then((res) => {
-          setImages((oldImages: any) => {
-            return [...oldImages, ...res.data.links];
-          });
-        })
-        .finally(() => setIsImageLoading(false));
-    }
-  };
-
-  const deleteImage = async (indexToDelete: number) => {
-    try {
-      await axios
-        .post("/api/products/deleteImage", {
-          imageSrc: images[indexToDelete],
-        })
-        .then((res) => {
-          const updatedImages = images.filter(
-            (_: any, index: number) => index !== indexToDelete
-          );
-          console.log(res);
-
-          setImages(updatedImages);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   const uploadImages = async (event: any) => {
+  //     setIsImageLoading(true);
+  //     const files = event.target?.files;
+  //     if (files.length > 0) {
+  //       const data = new FormData();
+  //       for (const file of files) {
+  //         data.append("file", file);
+  //       }
+  //
+  //       await axios
+  //         .post("/api/products/uploadImages", data, {
+  //           params: { productId: product?.productId },
+  //         })
+  //         .then((res) => {
+  //           setImages((oldImages: any) => {
+  //             return [...oldImages, ...res.data.links];
+  //           });
+  //         })
+  //         .finally(() => setIsImageLoading(false));
+  //     }
+  //   };
+  //
+  //   const deleteImage = async (indexToDelete: number) => {
+  //     try {
+  //       await axios
+  //         .post("/api/products/deleteImage", {
+  //           imageSrc: images[indexToDelete],
+  //         })
+  //         .then((res) => {
+  //           const updatedImages = images.filter(
+  //             (_: any, index: number) => index !== indexToDelete
+  //           );
+  //           console.log(res);
+  //
+  //           setImages(updatedImages);
+  //         });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
   const onSubmitt = async (data: any) => {
-    onSubmit({ ...data, imageLinks: images });
+    onSubmit({ ...data });
     setIsLoading(true);
   };
 
@@ -97,11 +97,11 @@ export default function ProductForm({
         <h1 className="text-xl font-medium text-black dark:text-white">
           {FormProperties[formType].heading}
         </h1>
-        <div>
+        {/* <div>
           <Label
             className="text-black dark:text-white"
             htmlFor="productName"
-            value="Nome do produto"
+            value="IMEI"
           />
           <TextInput
             id="productName"
@@ -115,8 +115,8 @@ export default function ProductForm({
             })}
           />
           <p className="text-red-500 text-sm">{errors.name?.message}</p>
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <Label
             className="text-black dark:text-white block"
             htmlFor="category"
@@ -134,8 +134,8 @@ export default function ProductForm({
                 </option>
               ))}
           </select>
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <Label
             className="text-black dark:text-white"
             htmlFor="email"
@@ -148,9 +148,9 @@ export default function ProductForm({
             style={{ height: "80px" }}
             {...register("description")}
           />
-        </div>
+        </div> */}
 
-        <Label
+        {/* <Label
           className="text-black dark:text-white"
           htmlFor="productPrice"
           value="Photos"
@@ -190,26 +190,26 @@ export default function ProductForm({
               ></input>
             </label>
           </div>
-        </div>
+        </div> */}
 
         <div>
           <Label
             className="text-black dark:text-white"
             htmlFor="productPrice"
-            value="Preço"
+            value="IMEI"
           />
           <TextInput
             id="productPrice"
             type="number"
             className="mt-2 bg-gray-100 rounded-md"
-            {...register("price", {
+            {...register("IMEI", {
               required: {
                 value: FormProperties[formType].isInputRequired,
-                message: "Preço é obrigatório",
+                message: "IMEI é obrigatório",
               },
             })}
           />
-          <p className="text-red-500 text-sm">{errors.price?.message}</p>
+          <p className="text-red-500 text-sm">{errors.IMEI?.message}</p>
         </div>
         <button
           type="submit"

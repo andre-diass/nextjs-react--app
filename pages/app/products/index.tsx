@@ -6,29 +6,30 @@ import trash from "@/public/trash.svg";
 import { GetServerSidePropsContext } from "next";
 import { getProducts } from "@/services/products/getProducts";
 import CustomTable from "@/components/templates/CustomTable";
-import IProduct from "@/types/products";
+import IProduct, { DeviceArray } from "@/types/products";
+import { getDevices } from "@/services/location/getDevices";
 
 interface Props {
-  products: Array<IProduct>;
+  devices: Array<DeviceArray>;
 }
 
-export default function Products({ products }: Props) {
+export default function Products({ devices }: Props) {
   const cols = [
-    { key: "name", label: "Name" },
+    { key: "IMEI", label: "IMEI" },
     // { key: "price", label: "Price" },
-    { key: "_id", label: "ID" },
+    { key: "id", label: "ID" },
     // { key: "createdAt", label: "Created At" },
   ];
 
   const actionCols = [
     {
       label: "",
-      render: (item: IProduct) => (
+      render: (item: DeviceArray) => (
         <>
           <div className="flex gap-1">
             <Link
               className="flex bg-blue-800 p-2 text-white rounded-md"
-              href={"products/edit/" + item._id}
+              href={"products/edit/" + item.id}
             >
               <img
                 className="hidden md:block"
@@ -42,7 +43,7 @@ export default function Products({ products }: Props) {
 
             <Link
               className="flex bg-red-600 p-2 text-white rounded-md"
-              href={"products/delete/" + item._id}
+              href={"products/delete/" + item.id}
             >
               <img
                 className="hidden md:block"
@@ -74,7 +75,7 @@ export default function Products({ products }: Props) {
       <CustomTable
         cols={cols}
         actionCols={actionCols}
-        data={products}
+        data={devices}
         customDataRender={customDataRender}
         type="product"
       ></CustomTable>
@@ -90,14 +91,17 @@ export const getServerSideProps = async function (
 
   const userId = props?.userId;
 
-  const products = await getProducts(userId);
-  console.log(products);
+  // const products = await getProducts(userId);
+  const devices = await getDevices(userId);
+  console.log(devices);
+
+  // console.log(products);
 
   return {
     props: {
       ...props,
       userId: userId,
-      products: products,
+      devices: devices,
     },
   };
 };

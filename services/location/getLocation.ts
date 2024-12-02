@@ -3,7 +3,7 @@ import api, { api_monolith } from "../index";
 export async function getLocation() {
   try {
     const response = await api_monolith.get("/location", {
-      params: { imei: "2222", reference_date: "11/30/2024" },
+      params: { imei: "869951036930547", reference_date: "12/02/2024" },
     });
 
     return response.data;

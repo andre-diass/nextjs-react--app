@@ -16,7 +16,7 @@ export default function NewProduct({
   const router = useRouter();
   async function createProduct(body: any) {
     axios
-      .post("/api/products/createProduct", body)
+      .post("/api/devices/createDevice", body)
       .catch((x) => console.error(x))
       .finally(() => router.push("/app/products"));
   }
@@ -24,8 +24,8 @@ export default function NewProduct({
   const onSubmit = async (data: any) => {
     try {
       const bodyWithAccountID = {
-        ...data,
-        userId: userId,
+        IMEI: data.IMEI,
+        user_id: userId,
       };
 
       createProduct(bodyWithAccountID);
