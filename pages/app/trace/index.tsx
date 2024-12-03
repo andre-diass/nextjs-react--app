@@ -27,11 +27,12 @@ export const getServerSideProps = async function (
   if (notFound) return { notFound };
 
   const locations = await getLocation();
+  const serializedLocations = JSON.parse(JSON.stringify(locations));
 
   return {
     props: {
       ...props,
-      locations: locations,
+      locations: serializedLocations,
     },
   };
 };
