@@ -66,6 +66,8 @@ const MapTeste = ({ locations }: Props) => {
       >
         <TileLayer url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} />
         {icon &&
+          locations.geolocations &&
+          locations.geolocations.length > 1 &&
           locations.geolocations.map((location, index) => (
             <Marker
               key={index}
